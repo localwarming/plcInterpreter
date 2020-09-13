@@ -70,7 +70,14 @@ public class RegexTests {
         return Stream.of(
                 Arguments.of("Java File", "Regex.tar.java", true),
                 Arguments.of("Java Class", "RegexTests.class", true),
+                Arguments.of("Gz Class", "RegexTests.class.gz", true),
+                Arguments.of("Zip Class", "RegexTests.class.zip", true),
+                Arguments.of("Sub-Name Class", "Regex.Tests.class", true),
                 Arguments.of("Directory", "directory", false),
+                Arguments.of("No type", "directory.", false),
+                Arguments.of("Start with .", ".file.class", false),
+                Arguments.of("Dot in class", "file.cl.ass", false),
+                Arguments.of("Whitespace", "file. class", false),
                 Arguments.of("Python File", "scrippy.py", false)
         );
     }
