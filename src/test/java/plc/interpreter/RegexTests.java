@@ -98,8 +98,10 @@ public class RegexTests {
                 Arguments.of("0 Characters", "", false),
                 Arguments.of("6 Characters", "6chars", false),
                 Arguments.of("15 Characters", "i<3pancakes!!", false),
-                Arguments.of("11 Characters", "wec&y4ei(a", false),
-                Arguments.of("22 Characters", "5284jfa923#$%&vba:I833", false)
+                Arguments.of("11 Characters", "wec&y4ei(a!", false),
+                Arguments.of("22 Characters", "5284jfa923#$%&vba:I833", false),
+                Arguments.of("Whitespace", "aaaaa aaaaaaa", false),
+                Arguments.of("Whitespace", "aaaaa aaaaaa", false)
         );
     }
 
