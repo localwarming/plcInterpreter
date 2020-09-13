@@ -44,8 +44,14 @@ public class RegexTests {
     public static Stream<Arguments> testEmailRegex() {
         return Stream.of(
                 Arguments.of("Alphanumeric", "thelegend27@gmail.com", true),
+                Arguments.of("Valid Symbols", "symbols._-@gmail.com", true),
+                Arguments.of("Upper Case Alphanumeric", "THELENGEND27@gmail.com", true),
+                Arguments.of("Upper Case Email Service", "THELENGEND27@GMAIL.com", true),
                 Arguments.of("UF Domain", "otherdomain@ufl.edu", true),
                 Arguments.of("Missing Domain Dot", "missingdot@gmailcom", false),
+                Arguments.of("Extra At Symbol", "extraat@@gmail.com", false),
+                Arguments.of("Extra Domain Dot", "extradot@gmail..com", false),
+                Arguments.of("Long com", "differentcom.@gmail.comm", false),
                 Arguments.of("Symbols", "symbols#$%@gmail.com", false)
         );
     }
