@@ -13,8 +13,8 @@ public class Regex {
             FILE_NAMES = Pattern.compile("(?<name>[^\\.]*).*(\\.java|\\.class)"),
             EVEN_STRINGS = Pattern.compile(""),
             INTEGER_LIST = Pattern.compile(""),
-            IDENTIFIER = Pattern.compile("[^0-9][A-Za-z0-9_\\+\\-\\*/:\\.!?<>=]*[A-Za-z\\+\\-\\*/:.!?<>=]+[A-Za-z0-9\\+\\-\\*/:.!?<>=]*"),
-            NUMBER = Pattern.compile("[\\+\\-]?([0-9]|[0-9]+\\.?[0-9]+)"),
+            IDENTIFIER = Pattern.compile("([A-Za-z_+\\-*/:!?<>=]+[0-9A-Za-z_+\\-*/:\\.!?<>=]*|\\.[0-9A-Za-z_+\\-*/:\\.!?<>=]+)"),
+            NUMBER = Pattern.compile("[\\+\\-]?[0-9]+\\.?[0-9]+"),
             STRING = Pattern.compile("\"[^\\\\\"]*(\\\\[bnrt'\"\\\\][^\\\\\"]*)*\"");
 
 }

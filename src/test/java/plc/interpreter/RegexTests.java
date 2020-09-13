@@ -79,8 +79,14 @@ public class RegexTests {
         return Stream.of(
                 Arguments.of("14 Characters", "thishas14chars", true),
                 Arguments.of("10 Characters", "i<3pancakes!", true),
+                Arguments.of("16 Characters", "ld84&8bk12s^yg9*", true),
+                Arguments.of("18 Characters", "kd;keicng*031232((", true),
+                Arguments.of("20 Characters", "5284jfa923#$%&vba:I8", true),
+                Arguments.of("0 Characters", "", false),
                 Arguments.of("6 Characters", "6chars", false),
-                Arguments.of("15 Characters", "i<3pancakes!!", false)
+                Arguments.of("15 Characters", "i<3pancakes!!", false),
+                Arguments.of("11 Characters", "wec&y4ei(a", false),
+                Arguments.of("22 Characters", "5284jfa923#$%&vba:I833", false)
         );
     }
 
@@ -94,8 +100,14 @@ public class RegexTests {
         return Stream.of(
                 Arguments.of("Empty List", "[]", true),
                 Arguments.of("Single Element", "[1]", true),
+                Arguments.of("Multiple Elements no spaces", "[1,2,3]", true),
+                Arguments.of("Multiple Elements spaces", "[1, 2, 3]", true),
                 Arguments.of("Multiple Elements", "[1,2,3]", true),
                 Arguments.of("Missing Brackets", "1,2,3", false),
+                Arguments.of("One Bracket start", "[1,2,3", false),
+                Arguments.of("One Bracket end", "1,2,3]", false),
+                Arguments.of("Extra spaces", "[1,  2,3]", false),
+                Arguments.of("Wrong space", "[1, 2, 3 ]", false),
                 Arguments.of("Missing Commas", "[1 2 3]", false),
                 Arguments.of("Trailing Comma", "[1,2,3,]", false)
         );
@@ -146,6 +158,7 @@ public class RegexTests {
                 Arguments.of("Has space", "423 123", false),
                 Arguments.of("Two decimals", "12.34.56", false),
                 Arguments.of("Trailing period", "423123.", false),
+                Arguments.of("Whitespace", "42 3123", false),
                 Arguments.of("Just period", ".", false)
         );
     }

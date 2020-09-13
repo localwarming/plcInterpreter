@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">16</div>
+<div class="counter">18</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.082s</div>
+<div class="counter">0.062s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,99 +76,111 @@
 </tr>
 </thead>
 <tr>
-<td class="success">[10] Escaped \\, &quot;test with \\ escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[10]</td>
-<td class="success">0.008s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[11] Characters, &quot;!@#$%^&amp;*()_+1234567890[]{}|`~./&lt;&gt;?&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[11]</td>
+<td class="success">[10] Start with char, &lt;123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[10]</td>
 <td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[12] Missing quote, &quot;test quote, false</td>
-<td class="success">testStringRegex(String, String, boolean)[12]</td>
+<td class="success">[11] Start with decimal, .123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[11]</td>
 <td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[13] Unescaped &quot;, &quot;test &quot; quote &quot;, false</td>
-<td class="success">testStringRegex(String, String, boolean)[13]</td>
-<td class="success">0.003s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[14] Unescaped \, &quot;test \ quote &quot;, false</td>
-<td class="success">testStringRegex(String, String, boolean)[14]</td>
-<td class="success">0.003s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[15] Invalid \, &quot;test \e quote &quot;, false</td>
-<td class="success">testStringRegex(String, String, boolean)[15]</td>
-<td class="success">0.005s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[16] No start quote, test &quot;quote&quot;, false</td>
-<td class="success">testStringRegex(String, String, boolean)[16]</td>
-<td class="success">0.003s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[1] String, &quot;test&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[1]</td>
-<td class="success">0.037s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[2] Empty, &quot;&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[2]</td>
+<td class="success">[12] Random letter, 12a3, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[12]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[3] Unescaped ', &quot;test ' quote '&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[3]</td>
+<td class="success">[13] Random char, 12!3, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[13]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[14] Has space, 423 123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[14]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[15] Two decimals, 12.34.56, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[15]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[4] Escaped \b, &quot;test with \b escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[4]</td>
+<td class="success">[16] Trailing period, 423123., false</td>
+<td class="success">testNumberRegex(String, String, boolean)[16]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[17] Whitespace, 42 3123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[17]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[5] Escaped \r, &quot;test with \r escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[5]</td>
-<td class="success">0.012s</td>
+<td class="success">[18] Just period, ., false</td>
+<td class="success">testNumberRegex(String, String, boolean)[18]</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[6] Escaped \n, &quot;test with \n escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[6]</td>
+<td class="success">[1] Unsigned int, 1234, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[1]</td>
+<td class="success">0.036s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] Negative int, -1234, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[2]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[7] Escaped \t, &quot;test with \t escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[7]</td>
+<td class="success">[3] Positive int, +1234, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[3]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[8] Escaped \', &quot;test with \' escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[8]</td>
+<td class="success">[4] Unsigned Floating Point, 12.34, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[4]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Negative Floating Point, -12.34, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[5]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[9] Escaped \&quot;, &quot;test with \&quot; escaped&quot;, true</td>
-<td class="success">testStringRegex(String, String, boolean)[9]</td>
+<td class="success">[6] Positive Floating Point, +12.34, true</td>
+<td class="success">testNumberRegex(String, String, boolean)[6]</td>
 <td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] Random positive, 423+123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[7]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] Random negative, 423-123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[8]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Start with letter, a123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[9]</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -181,7 +193,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.3</a> at Sep 13, 2020 4:42:35 PM</p>
+<a href="http://www.gradle.org">Gradle 6.3</a> at Sep 13, 2020 5:16:39 PM</p>
 </div>
 </div>
 </body>
