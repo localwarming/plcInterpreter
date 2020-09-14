@@ -45,11 +45,18 @@ public class RegexTests {
         return Stream.of(
                 Arguments.of("Alphanumeric", "thelegend27@gmail.com", true),
                 Arguments.of("Valid Symbols", "symbols._-@gmail.com", true),
+                Arguments.of("Starts With Symbols", "._-symbols@gmail.com", true),
                 Arguments.of("Upper Case Alphanumeric", "THELENGEND27@gmail.com", true),
-                Arguments.of("Upper Case Email Service", "THELENGEND27@GMAIL.com", true),
+                Arguments.of("Upper Case Email Service", "thelegend27@GMAIL.com", true),
+                Arguments.of("Upper Case Everything", "THELENGEND27@GMAIL.com", true),
                 Arguments.of("UF Domain", "otherdomain@ufl.edu", true),
+                Arguments.of("Other Domain", "otherdomain@yahoo.com", true),
                 Arguments.of("Missing Domain Dot", "missingdot@gmailcom", false),
-                Arguments.of("Extra At Symbol", "extraat@@gmail.com", false),
+                Arguments.of("Extra @ Symbol", "extraat@@gmail.com", false),
+                Arguments.of("Just the Domain", "@gmail.com", false),
+                Arguments.of("Missing Domain", "thelegend27", false),
+                Arguments.of("Missing Domain With @ Symbol", "thelegend27@", false),
+                Arguments.of("Just the @ Symbol", "@", false),
                 Arguments.of("Extra Domain Dot", "extradot@gmail..com", false),
                 Arguments.of("Long com", "differentcom.@gmail.comm", false),
                 Arguments.of("Symbols", "symbols#$%@gmail.com", false)
@@ -100,8 +107,7 @@ public class RegexTests {
                 Arguments.of("15 Characters", "i<3pancakes!!", false),
                 Arguments.of("11 Characters", "wec&y4ei(a!", false),
                 Arguments.of("22 Characters", "5284jfa923#$%&vba:I833", false),
-                Arguments.of("Whitespace", "aaaaa aaaaaaa", false),
-                Arguments.of("Whitespace", "aaaaa aaaaaa", false)
+                Arguments.of("Whitespace", "aaaaa aaaaaaa", false)
         );
     }
 
