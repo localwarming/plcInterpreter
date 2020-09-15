@@ -85,6 +85,7 @@ public class RegexTests {
                 Arguments.of("Start with .", ".file.class", false),
                 Arguments.of("Dot in class", "file.cl.ass", false),
                 Arguments.of("Whitespace", "file. class", false),
+                Arguments.of("Just .", ".", false),
                 Arguments.of("Python File", "scrippy.py", false)
         );
     }
@@ -164,6 +165,7 @@ public class RegexTests {
     public static Stream<Arguments> testNumberRegex() {
         return Stream.of(
                 Arguments.of("Unsigned int", "1234", true),
+                Arguments.of("Single int", "1", true),
                 Arguments.of("Negative int", "-1234", true),
                 Arguments.of("Positive int", "+1234", true),
                 Arguments.of("Unsigned Floating Point", "12.34", true),
