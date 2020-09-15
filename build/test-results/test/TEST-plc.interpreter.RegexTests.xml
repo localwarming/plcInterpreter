@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="plc.interpreter.RegexTests" tests="19" skipped="0" failures="0" errors="0" timestamp="2020-09-15T21:44:17" hostname="DOLPHIN.local" time="0.133">
+<testsuite name="plc.interpreter.RegexTests" tests="19" skipped="0" failures="0" errors="0" timestamp="2020-09-15T21:56:47" hostname="DOLPHIN.local" time="0.116">
   <properties/>
-  <testcase name="testNumberRegex(String, String, boolean)[1]" classname="plc.interpreter.RegexTests" time="0.05"/>
-  <testcase name="testNumberRegex(String, String, boolean)[2]" classname="plc.interpreter.RegexTests" time="0.004"/>
-  <testcase name="testNumberRegex(String, String, boolean)[3]" classname="plc.interpreter.RegexTests" time="0.002"/>
-  <testcase name="testNumberRegex(String, String, boolean)[4]" classname="plc.interpreter.RegexTests" time="0.001"/>
+  <testcase name="testNumberRegex(String, String, boolean)[1]" classname="plc.interpreter.RegexTests" time="0.042"/>
+  <testcase name="testNumberRegex(String, String, boolean)[2]" classname="plc.interpreter.RegexTests" time="0.001"/>
+  <testcase name="testNumberRegex(String, String, boolean)[3]" classname="plc.interpreter.RegexTests" time="0.003"/>
+  <testcase name="testNumberRegex(String, String, boolean)[4]" classname="plc.interpreter.RegexTests" time="0.002"/>
   <testcase name="testNumberRegex(String, String, boolean)[5]" classname="plc.interpreter.RegexTests" time="0.001"/>
   <testcase name="testNumberRegex(String, String, boolean)[6]" classname="plc.interpreter.RegexTests" time="0.002"/>
   <testcase name="testNumberRegex(String, String, boolean)[7]" classname="plc.interpreter.RegexTests" time="0.002"/>
-  <testcase name="testNumberRegex(String, String, boolean)[8]" classname="plc.interpreter.RegexTests" time="0.004"/>
-  <testcase name="testNumberRegex(String, String, boolean)[9]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[8]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[9]" classname="plc.interpreter.RegexTests" time="0.001"/>
   <testcase name="testNumberRegex(String, String, boolean)[10]" classname="plc.interpreter.RegexTests" time="0.001"/>
-  <testcase name="testNumberRegex(String, String, boolean)[11]" classname="plc.interpreter.RegexTests" time="0.002"/>
-  <testcase name="testNumberRegex(String, String, boolean)[12]" classname="plc.interpreter.RegexTests" time="0.002"/>
-  <testcase name="testNumberRegex(String, String, boolean)[13]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[11]" classname="plc.interpreter.RegexTests" time="0.001"/>
+  <testcase name="testNumberRegex(String, String, boolean)[12]" classname="plc.interpreter.RegexTests" time="0.001"/>
+  <testcase name="testNumberRegex(String, String, boolean)[13]" classname="plc.interpreter.RegexTests" time="0.004"/>
   <testcase name="testNumberRegex(String, String, boolean)[14]" classname="plc.interpreter.RegexTests" time="0.002"/>
-  <testcase name="testNumberRegex(String, String, boolean)[15]" classname="plc.interpreter.RegexTests" time="0.003"/>
-  <testcase name="testNumberRegex(String, String, boolean)[16]" classname="plc.interpreter.RegexTests" time="0.001"/>
-  <testcase name="testNumberRegex(String, String, boolean)[17]" classname="plc.interpreter.RegexTests" time="0.001"/>
-  <testcase name="testNumberRegex(String, String, boolean)[18]" classname="plc.interpreter.RegexTests" time="0.004"/>
-  <testcase name="testNumberRegex(String, String, boolean)[19]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[15]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[16]" classname="plc.interpreter.RegexTests" time="0.002"/>
+  <testcase name="testNumberRegex(String, String, boolean)[17]" classname="plc.interpreter.RegexTests" time="0.004"/>
+  <testcase name="testNumberRegex(String, String, boolean)[18]" classname="plc.interpreter.RegexTests" time="0.0"/>
+  <testcase name="testNumberRegex(String, String, boolean)[19]" classname="plc.interpreter.RegexTests" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

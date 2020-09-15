@@ -165,9 +165,9 @@ public class RegexTests {
     public static Stream<Arguments> testNumberRegex() {
         return Stream.of(
                 Arguments.of("Unsigned int", "1234", true),
-                Arguments.of("Single int", "1", true),
                 Arguments.of("Negative int", "-1234", true),
                 Arguments.of("Positive int", "+1234", true),
+                Arguments.of("Single int", "1", true),
                 Arguments.of("Unsigned Floating Point", "12.34", true),
                 Arguments.of("Negative Floating Point", "-12.34", true),
                 Arguments.of("Positive Floating Point", "+12.34", true),
