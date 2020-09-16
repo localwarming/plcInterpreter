@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">19</div>
+<div class="counter">99</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.074s</div>
+<div class="counter">0.141s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,61 +76,433 @@
 </tr>
 </thead>
 <tr>
-<td class="success">[10] Start with letter, a123, false</td>
-<td class="success">testNumberRegex(String, String, boolean)[10]</td>
+<td class="success">[10] Extra @ Symbol, extraat@@gmail.com, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[10]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[11] Start with char, &lt;123, false</td>
+<td class="success">[11] Just the Domain, @gmail.com, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[11]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[12] Missing Domain, thelegend27, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[12]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[13] Missing Domain With @ Symbol, thelegend27@, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[13]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[14] Just the @ Symbol, @, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[14]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[15] Extra Domain Dot, extradot@gmail..com, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[15]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[16] Long com, differentcom.@gmail.comm, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[16]</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[17] Symbols, symbols#$%@gmail.com, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[17]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] Alphanumeric, thelegend27@gmail.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[1]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] Valid Symbols, symbols._-@gmail.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[2]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] Starts With Symbols, ._-symbols@gmail.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[3]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] Upper Case Alphanumeric, THELENGEND27@gmail.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[4]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Upper Case Email Service, thelegend27@GMAIL.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] Upper Case Everything, THELENGEND27@GMAIL.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[6]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] UF Domain, otherdomain@ufl.edu, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[7]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] Other Domain, otherdomain@yahoo.com, true</td>
+<td class="success">testEmailRegex(String, String, boolean)[8]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Missing Domain Dot, missingdot@gmailcom, false</td>
+<td class="success">testEmailRegex(String, String, boolean)[9]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] 22 Characters, 5284jfa923#$%&amp;vba:I833, false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[10]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[11] Whitespace, aaaaa aaaaaaa, false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[11]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] 14 Characters, thishas14chars, true</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[1]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] 10 Characters, i&lt;3pancakes!, true</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[2]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] 16 Characters, ld84&amp;8bk12s^yg9*, true</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[3]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] 18 Characters, kd;keicng*031232((, true</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[4]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] 20 Characters, 5284jfa923#$%&amp;vba:I8, true</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] 0 Characters, , false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[6]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] 6 Characters, 6chars, false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[7]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] 15 Characters, i&lt;3pancakes!!, false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[8]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] 11 Characters, wec&amp;y4ei(a!, false</td>
+<td class="success">testEvenStringsRegex(String, String, boolean)[9]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] Whitespace, file. class, false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[10]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[11] Just ., ., false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[11]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[12] Python File, scrippy.py, false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[12]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] Java File, Regex.tar.java, true</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[1]</td>
+<td class="success">0.048s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] Java Class, RegexTests.class, true</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[2]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] Gz Class, RegexTests.class.gz, true</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[3]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] Zip Class, RegexTests.class.zip, true</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[4]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Sub-Name Class, Regex.Tests.class, true</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] Directory, directory, false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[6]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] No type, directory., false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[7]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] Start with ., .file.class, false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[8]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Dot in class, file.cl.ass, false</td>
+<td class="success">testFileNamesRegex(String, String, boolean)[9]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] Just period, ., false</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[10]</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] All letters, foo, true</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[1]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] All characters, &lt;=&gt;, true</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[2]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] Letters with mixed chars, one+!two, true</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[3]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] Starting chars, -99, true</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[4]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Two periods, .., true</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] Start with numbers, 145, false</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[6]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] Has commas, some,string, false</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[7]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] Has quotes, this&quot;quote, false</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[8]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Has space, this quote, false</td>
+<td class="success">testIdentifierRegex(String, String, boolean)[9]</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] Wrong space, [1, 2, 3 ], false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[10]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[11] Missing Commas, [1 2 3], false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[11]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[12] Trailing Comma, [1,2,3,], false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[12]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] Empty List, [], true</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[1]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] Single Element, [1], true</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[2]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] Multiple Elements no spaces, [1,2,3], true</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[3]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] Multiple Elements spaces, [1, 2, 3], true</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[4]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Multiple Elements, [1,2,3], true</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] Missing Brackets, 1,2,3, false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[6]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] One Bracket start, [1,2,3, false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[7]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] One Bracket end, 1,2,3], false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[8]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Extra spaces, [1,  2,3], false</td>
+<td class="success">testIntegerListRegex(String, String, boolean)[9]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] Random positive, 423+123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[10]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[11] Random negative, 423-123, false</td>
 <td class="success">testNumberRegex(String, String, boolean)[11]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[12] Start with decimal, .123, false</td>
+<td class="success">[12] Start with letter, a123, false</td>
 <td class="success">testNumberRegex(String, String, boolean)[12]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[13] Random letter, 12a3, false</td>
+<td class="success">[13] Start with char, &lt;123, false</td>
 <td class="success">testNumberRegex(String, String, boolean)[13]</td>
-<td class="success">0.004s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[14] Random char, 12!3, false</td>
-<td class="success">testNumberRegex(String, String, boolean)[14]</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[15] Has space, 423 123, false</td>
-<td class="success">testNumberRegex(String, String, boolean)[15]</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[16] Two decimals, 12.34.56, false</td>
-<td class="success">testNumberRegex(String, String, boolean)[16]</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[17] Trailing period, 423123., false</td>
-<td class="success">testNumberRegex(String, String, boolean)[17]</td>
-<td class="success">0.004s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">[18] Whitespace, 42 3123, false</td>
-<td class="success">testNumberRegex(String, String, boolean)[18]</td>
 <td class="success">0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[19] Just period, ., false</td>
+<td class="success">[14] Start with decimal, .123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[14]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[15] Random letter, 12a3, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[15]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[16] Random char, 12!3, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[16]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[17] Has space, 423 123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[17]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[18] Two decimals, 12.34.56, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[18]</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[19] Trailing period, 423123., false</td>
 <td class="success">testNumberRegex(String, String, boolean)[19]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
@@ -138,55 +510,163 @@
 <tr>
 <td class="success">[1] Unsigned int, 1234, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[1]</td>
-<td class="success">0.042s</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[20] Whitespace, 42 3123, false</td>
+<td class="success">testNumberRegex(String, String, boolean)[20]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[21] Just period, ., false</td>
+<td class="success">testNumberRegex(String, String, boolean)[21]</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">[2] Negative int, -1234, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[2]</td>
-<td class="success">0.001s</td>
+<td class="success">0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">[3] Positive int, +1234, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[3]</td>
-<td class="success">0.003s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">[4] Single int, 1, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[4]</td>
-<td class="success">0.002s</td>
+<td class="success">0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[5] Unsigned Floating Point, 12.34, true</td>
+<td class="success">[5] Example Floating point, -1.0, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[5]</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[6] Negative Floating Point, -12.34, true</td>
+<td class="success">[6] Trailing 0s, 007.000, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[6]</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[7] Positive Floating Point, +12.34, true</td>
+<td class="success">[7] Unsigned Floating Point, 12.34, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[7]</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[8] Random positive, 423+123, false</td>
+<td class="success">[8] Negative Floating Point, -12.34, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[8]</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">[9] Random negative, 423-123, false</td>
+<td class="success">[9] Positive Floating Point, +12.34, true</td>
 <td class="success">testNumberRegex(String, String, boolean)[9]</td>
 <td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[10] Escaped \\, &quot;test with \\ escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[10]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[11] Characters, &quot;!@#$%^&amp;*()_+1234567890[]{}|`~./&lt;&gt;?&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[11]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[12] Missing quote, &quot;test quote, false</td>
+<td class="success">testStringRegex(String, String, boolean)[12]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[13] Unescaped &quot;, &quot;test &quot; quote &quot;, false</td>
+<td class="success">testStringRegex(String, String, boolean)[13]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[14] Unescaped \, &quot;test \ quote &quot;, false</td>
+<td class="success">testStringRegex(String, String, boolean)[14]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[15] Invalid \, &quot;test \e quote &quot;, false</td>
+<td class="success">testStringRegex(String, String, boolean)[15]</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[16] No start quote, test &quot;quote&quot;, false</td>
+<td class="success">testStringRegex(String, String, boolean)[16]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[1] String, &quot;test&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[1]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[2] Empty, &quot;&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[2]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[3] Unescaped ', &quot;test ' quote '&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[3]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[4] Escaped \b, &quot;test with \b escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[4]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[5] Escaped \r, &quot;test with \r escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[5]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[6] Escaped \n, &quot;test with \n escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[6]</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[7] Escaped \t, &quot;test with \t escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[7]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[8] Escaped \', &quot;test with \' escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[8]</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">[9] Escaped \&quot;, &quot;test with \&quot; escaped&quot;, true</td>
+<td class="success">testStringRegex(String, String, boolean)[9]</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -199,7 +679,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.3</a> at Sep 15, 2020, 5:56:47 PM</p>
+<a href="http://www.gradle.org">Gradle 6.3</a> at Sep 16, 2020 12:11:51 PM</p>
 </div>
 </div>
 </body>

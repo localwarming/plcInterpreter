@@ -168,6 +168,8 @@ public class RegexTests {
                 Arguments.of("Negative int", "-1234", true),
                 Arguments.of("Positive int", "+1234", true),
                 Arguments.of("Single int", "1", true),
+                Arguments.of("Single Float", "-1.0", true),
+                Arguments.of("Trailing 0s", "007.000", true),
                 Arguments.of("Unsigned Floating Point", "12.34", true),
                 Arguments.of("Negative Floating Point", "-12.34", true),
                 Arguments.of("Positive Floating Point", "+12.34", true),
