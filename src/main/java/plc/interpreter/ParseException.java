@@ -1,6 +1,6 @@
 package plc.interpreter;
 
-public class ParseException extends RuntimeException {
+public final class ParseException extends RuntimeException {
 
     private final int index;
 

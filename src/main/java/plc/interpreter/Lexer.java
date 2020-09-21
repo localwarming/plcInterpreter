@@ -1,5 +1,6 @@
 package plc.interpreter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +18,12 @@ import java.util.List;
  * lot easier. Regex isn't the most performant way to go but it gets the job
  * done, and the focus here is on the concept.
  */
-public class Lexer {
+public final class Lexer {
 
-    private final String input;
-    private final CharStream chars = new CharStream();
+    final CharStream chars;
 
-    private Lexer(String input) {
-        this.input = input;
+    Lexer(String input) {
+        chars = new CharStream(input);
     }
 
     /**
@@ -38,7 +38,7 @@ public class Lexer {
      * of the input is reached, returning the list of tokens lexed. This should
      * also handle skipping whitespace.
      */
-    private List<Token> lex() throws ParseException {
+    List<Token> lex() throws ParseException {
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -52,29 +52,45 @@ public class Lexer {
      *
      * <pre>
      * {@code
-     *     private plc.interpreter.Token lexCharacter() {
+     *     Token lexCharacter() {
      *         if (!match("\'")) {
-     *             //your lexer should prevent this from happening, as it should
-     *             //only try to lex a character literal if the next character
-     *             //begins a character literal.
-     *             throw new RuntimeException("Next character does not begin a character literal.");
+     *             //Your lexer should prevent this from happening, as it should
+     *             // only try to lex a character literal if the next character
+     *             // begins a character literal.
+     *             //Additionally, the index being passed back is a 'ballpark'
+     *             // value. If we were doing proper diagnostics, we would want
+     *             // to provide a range covering the entire error. It's really
+     *             // only for debugging / proof of concept.
+     *             throw new ParseException("Next character does not begin a character literal.", chars.index);
      *         }
      *         if (!chars.has(0) || match("\'")) {
-     *             throw new RuntimeException("Empty character literal.");
+     *             throw new ParseException("Empty character literal.",  chars.index);
      *         } else if (match("\\")) {
      *             //lex escape characters...
      *         } else {
      *             chars.advance();
      *         }
      *         if (!match("\'")) {
-     *             throw new RuntimeException("Unterminated character literal.");
+     *             throw new ParseException("Unterminated character literal.", chars.index);
      *         }
-     *         return new plc.interpreter.Token(plc.interpreter.Token.Type.CHARACTER, chars.emit());
+     *         return chars.emit(Token.Type.CHARACTER);
      *     }
      * }
      * </pre>
      */
-    private Token lexToken() throws ParseException {
+    Token lexToken() throws ParseException {
+        throw new UnsupportedOperationException(); //TODO
+    }
+
+    Token lexIdentifier() {
+        throw new UnsupportedOperationException(); //TODO
+    }
+
+    Token lexNumber() {
+        throw new UnsupportedOperationException(); //TODO
+    }
+
+    Token lexString() throws ParseException {
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -83,7 +99,7 @@ public class Lexer {
      * which should be a regex. For example, {@code peek("a", "b", "c")} would
      * return true for the sequence {@code 'a', 'b', 'c'}
      */
-    private boolean peek(String... patterns) {
+    boolean peek(String... patterns) {
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -91,7 +107,7 @@ public class Lexer {
      * Returns true in the same way as peek, but also advances the CharStream to
      * if the characters matched.
      */
-    private boolean match(String... patterns) {
+    boolean match(String... patterns) {
         throw new UnsupportedOperationException(); //TODO
     }
 
@@ -100,22 +116,27 @@ public class Lexer {
      * where in the input string the lexer currently is, and the builder
      * accumulates characters into the literal value for the next token.
      */
-    private final class CharStream {
+    static final class CharStream {
 
-        private int index = 0;
-        private int length = 0;
+        final String input;
+        int index = 0;
+        int length = 0;
+
+        CharStream(String input) {
+            this.input = input;
+        }
 
         /**
          * Returns true if there is a character at index + offset.
          */
-        public boolean has(int offset) {
+        boolean has(int offset) {
             throw new UnsupportedOperationException(); //TODO
         }
 
         /**
          * Gets the character at index + offset.
          */
-        public char get(int offset) {
+        char get(int offset) {
             throw new UnsupportedOperationException(); //TODO
         }
 
@@ -123,22 +144,23 @@ public class Lexer {
          * Advances to the next character, incrementing the current index and
          * length of the literal being built.
          */
-        public void advance() {
+        void advance() {
             throw new UnsupportedOperationException(); //TODO
         }
 
         /**
          * Resets the length to zero, skipping any consumed characters.
          */
-        public void reset() {
+        void reset() {
             throw new UnsupportedOperationException(); //TODO
         }
 
         /**
-         * Returns a token of the given type with the built literal. The index
-         * of the token should be the <em>starting</em> index.
+         * Returns a token of the given type with the built literal and resets
+         * the length to zero. The index of the token should be the
+         * <em>starting</em> index.
          */
-        public Token emit(Token.Type type) {
+        Token emit(Token.Type type) {
             throw new UnsupportedOperationException(); //TODO
         }
 
