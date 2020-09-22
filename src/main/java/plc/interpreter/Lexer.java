@@ -154,28 +154,29 @@ public final class Lexer {
         }
 
         boolean has(int offset) {
-            return input.length() > index + length + offset;
+            return input.length() > index + offset;
         }
 
         char get(int offset) {
-            return input.charAt(index + length + offset);
+            return input.charAt(index + offset);
         }
 
         void advance() {
+            index++;
             length++;
         }
 
         void advance(int offset) {
+            index += offset;
             length += offset;
         }
 
         void reset() {
-            index += length;
             length = 0;
         }
 
         Token emit(Token.Type type) {
-            Token token = new Token(type, input.substring(index, index + length), index);
+            Token token = new Token(type, input.substring(index - length, index), index - length);
             reset();
             return token;
         }
