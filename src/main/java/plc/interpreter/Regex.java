@@ -10,12 +10,11 @@ public class Regex {
 
     public static final Pattern
             EMAIL = Pattern.compile("[A-Za-z0-9._-]+@[A-Za-z0-9-]*\\.[a-z]{2,3}"),
-            FILE_NAMES = Pattern.compile("(?<name>[^\\.]+).*(\\.java|\\.class).*"),
-            EVEN_STRINGS = Pattern.compile("(\\S\\S){5,10}"),
-            INTEGER_LIST = Pattern.compile("\\[+\\d?+(?:,+( )?+\\d)*+\\]"),
-            IDENTIFIER = Pattern.compile("([A-Za-z_+\\-*/:!?<>=]+[0-9A-Za-z_+\\-*/:\\.!?<>=]*|\\.[0-9A-Za-z_+\\-*/:\\.!?<>=]+)"),
-    //      is -99 an identifier or a number? currently counts as both (also .99 is an identifier technically)
-            NUMBER = Pattern.compile("[\\+\\-]?[0-9]+(\\.[0-9]+)?"),
-            STRING = Pattern.compile("\"[^\\\\\"]*(\\\\[bnrt'\"\\\\][^\\\\\"]*)*\"");
+            FILE_NAMES = Pattern.compile("(?<name>[^.]+)(\\.[^.]+)*\\.(java|class)"),
+            EVEN_STRINGS = Pattern.compile("(..){5,10}"),
+            INTEGER_LIST = Pattern.compile("\\[([1-9]\\d*(, ?[1-9]\\d*)*)?]"),
+            IDENTIFIER = Pattern.compile("[A-Za-z_+\\-*/:!?<>=][A-Za-z0-9_+\\-*/.:!?<>=]*|\\.[A-Za-z0-9_+\\-*/.:!?<>=]+"),
+            NUMBER = Pattern.compile("[+-]?[0-9]+(\\.[0-9]+)?"),
+            STRING = Pattern.compile("\"([^\"\\\\]|\\\\[bnrt\'\"\\\\])*\"");
 
 }

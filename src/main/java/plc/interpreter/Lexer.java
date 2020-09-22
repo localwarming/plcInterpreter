@@ -1,7 +1,8 @@
 package plc.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * The lexer works through three main functions:
@@ -39,83 +40,109 @@ public final class Lexer {
      * also handle skipping whitespace.
      */
     List<Token> lex() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        List<Token> tokens = new ArrayList<Token>();
+        while (chars.has(0)) {
+            if (!peek("\\S")) {
+                chars.advance();
+                chars.reset();
+            } else {
+                tokens.add(lexToken());
+            }
+        }
+        return tokens;
     }
 
-    /**
-     * Lexes the next token. It may be helpful to have this call other methods,
-     * such as {@code lexIdentifier()} or {@code lexNumber()}, based on the next
-     * character(s).
-     *
-     * Additionally, here is an example of lexing a character literal (not used
-     * in this assignment) using the peek/match methods below.
-     *
-     * <pre>
-     * {@code
-     *     Token lexCharacter() {
-     *         if (!match("\'")) {
-     *             //Your lexer should prevent this from happening, as it should
-     *             // only try to lex a character literal if the next character
-     *             // begins a character literal.
-     *             //Additionally, the index being passed back is a 'ballpark'
-     *             // value. If we were doing proper diagnostics, we would want
-     *             // to provide a range covering the entire error. It's really
-     *             // only for debugging / proof of concept.
-     *             throw new ParseException("Next character does not begin a character literal.", chars.index);
-     *         }
-     *         if (!chars.has(0) || match("\'")) {
-     *             throw new ParseException("Empty character literal.",  chars.index);
-     *         } else if (match("\\")) {
-     *             //lex escape characters...
-     *         } else {
-     *             chars.advance();
-     *         }
-     *         if (!match("\'")) {
-     *             throw new ParseException("Unterminated character literal.", chars.index);
-     *         }
-     *         return chars.emit(Token.Type.CHARACTER);
-     *     }
-     * }
-     * </pre>
-     */
     Token lexToken() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        if (peek("\"")) {
+            return lexString();
+        } else if (peek("[+-]","[0-9]") | peek("[0-9]")) {
+            return lexNumber();
+        } else if (peek("[A-Za-z_+\\-*/:!?<>=]")){
+            return lexIdentifier();
+        } else {
+            chars.advance();
+            return chars.emit(Token.Type.OPERATOR);
+        }
     }
 
     Token lexIdentifier() {
-        throw new UnsupportedOperationException(); //TODO
+        if (!match("[A-Za-z_+\\-*/:!?<>=]")) {
+            throw new ParseException("Identifier does not begin with identifier character.", chars.index);
+        }
+        while (peek("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
+            if (match("\\.")) {
+                if (!peek("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
+                    throw new ParseException("Trailing period in identifier.", chars.index);
+                }
+            } else if (!match("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
+                throw new ParseException("Identifier contains invalid character.", chars.index);
+            }
+        }
+        return chars.emit(Token.Type.IDENTIFIER);
     }
 
     Token lexNumber() {
-        throw new UnsupportedOperationException(); //TODO
+        boolean decimalLexed = false;
+        match("[+-]");
+        while (peek("[0-9]|\\.")) {
+            if (match("\\.")) {
+                if (decimalLexed) {
+                    throw new ParseException("Multiple decimal points in number.", chars.index);
+                }
+                decimalLexed = true;
+                if (!peek("[0-9]")) {
+                    throw new ParseException("Trailing decimal point in number.", chars.index);
+                }
+            } else if (!match("[0-9]")) {
+                throw new ParseException("Number contains non-number.", chars.index);
+            }
+        }
+        return chars.emit(Token.Type.NUMBER);
     }
 
     Token lexString() throws ParseException {
-        throw new UnsupportedOperationException(); //TODO
+        if (!match("\"")) {
+            throw new ParseException("String does not begin with a string literal.", chars.index);
+        }
+        while (!peek("\"") & chars.has(0)) {
+            if (match("\\\\")) {
+                if (!match("[bnrt\'\"\\\\]")) {
+                    throw new ParseException("Invalid escaped character in string literal.", chars.index);
+                }
+            }
+            else {
+                chars.advance();
+            }
+        }
+        if (!match("\"")) {
+            throw new ParseException("Unterminated string literal.", chars.index);
+        }
+        return chars.emit(Token.Type.STRING);
     }
 
-    /**
-     * Returns true if the next sequence of characters match the given patterns,
-     * which should be a regex. For example, {@code peek("a", "b", "c")} would
-     * return true for the sequence {@code 'a', 'b', 'c'}
-     */
+    private boolean checkForMatch(String[] patterns) {
+        for (int i = 0; i < patterns.length; i++) {
+            if (!chars.has(i)) return false;
+            Pattern pattern = Pattern.compile(patterns[i]);
+            Matcher matcher = pattern.matcher(Character.toString(chars.get(i)));
+            if (!matcher.matches()) return false;
+        }
+        return true;
+    }
+
     boolean peek(String... patterns) {
-        throw new UnsupportedOperationException(); //TODO
+        return checkForMatch(patterns);
     }
 
-    /**
-     * Returns true in the same way as peek, but also advances the CharStream to
-     * if the characters matched.
-     */
     boolean match(String... patterns) {
-        throw new UnsupportedOperationException(); //TODO
+        if (checkForMatch(patterns)) {
+            chars.advance(patterns.length);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    /**
-     * This is basically a sequence of characters. The index is used to maintain
-     * where in the input string the lexer currently is, and the builder
-     * accumulates characters into the literal value for the next token.
-     */
     static final class CharStream {
 
         final String input;
@@ -126,44 +153,31 @@ public final class Lexer {
             this.input = input;
         }
 
-        /**
-         * Returns true if there is a character at index + offset.
-         */
         boolean has(int offset) {
-            throw new UnsupportedOperationException(); //TODO
+            return input.length() > index + length + offset;
         }
 
-        /**
-         * Gets the character at index + offset.
-         */
         char get(int offset) {
-            throw new UnsupportedOperationException(); //TODO
+            return input.charAt(index + length + offset);
         }
 
-        /**
-         * Advances to the next character, incrementing the current index and
-         * length of the literal being built.
-         */
         void advance() {
-            throw new UnsupportedOperationException(); //TODO
+            length++;
         }
 
-        /**
-         * Resets the length to zero, skipping any consumed characters.
-         */
+        void advance(int offset) {
+            length += offset;
+        }
+
         void reset() {
-            throw new UnsupportedOperationException(); //TODO
+            index += length;
+            length = 0;
         }
 
-        /**
-         * Returns a token of the given type with the built literal and resets
-         * the length to zero. The index of the token should be the
-         * <em>starting</em> index.
-         */
         Token emit(Token.Type type) {
-            throw new UnsupportedOperationException(); //TODO
+            Token token = new Token(type, input.substring(index, index + length), index);
+            reset();
+            return token;
         }
-
     }
-
 }
