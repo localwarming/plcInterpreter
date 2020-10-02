@@ -36,6 +36,8 @@ public final class Parser {
      * Repeatedly parses a list of ASTs, returning the list as arguments of an
      * {@link Ast.Term} with the identifier {@code "source"}.
      */
+
+
     private Ast parse() {
         throw new UnsupportedOperationException(); //TODO
     }
@@ -77,6 +79,8 @@ public final class Parser {
      * }
      * </pre>
      */
+
+    //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
         throw new UnsupportedOperationException(); //TODO
     }
@@ -100,7 +104,14 @@ public final class Parser {
      * and advances the token stream.
      */
     private boolean match(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO
+        for(Object pattern : patterns) {
+            if (peek(pattern)) {
+                tokens.advance();
+                return true;
+            }
+        }
+        return false;
+        //throw new UnsupportedOperationException(); //TODO
     }
 
     private static final class TokenStream {
@@ -116,21 +127,30 @@ public final class Parser {
          * Returns true if there is a token at index + offset.
          */
         public boolean has(int offset) {
-            throw new UnsupportedOperationException(); //TODO
+            if((index + offset) > tokens.size()){
+                return false;
+            }
+            else{
+                //there is a token
+                return true;
+            }
+            //throw new UnsupportedOperationException(); //TODO
         }
 
         /**
          * Gets the token at index + offset.
          */
         public Token get(int offset) {
-            throw new UnsupportedOperationException(); //TODO
+            return tokens.get(index + offset);
+            //throw new UnsupportedOperationException(); //TODO
         }
 
         /**
          * Advances to the next token, incrementing the index.
          */
         public void advance() {
-            throw new UnsupportedOperationException(); //TODO
+            index++;
+            //throw new UnsupportedOperationException(); //TODO
         }
 
     }
