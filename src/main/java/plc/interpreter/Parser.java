@@ -111,7 +111,6 @@ public final class Parser {
             }
         }
         return false;
-        //throw new UnsupportedOperationException(); //TODO
     }
 
     private static final class TokenStream {
@@ -134,7 +133,6 @@ public final class Parser {
                 //there is a token
                 return true;
             }
-            //throw new UnsupportedOperationException(); //TODO
         }
 
         /**
@@ -142,7 +140,6 @@ public final class Parser {
          */
         public Token get(int offset) {
             return tokens.get(index + offset);
-            //throw new UnsupportedOperationException(); //TODO
         }
 
         /**
@@ -150,7 +147,6 @@ public final class Parser {
          */
         public void advance() {
             index++;
-            //throw new UnsupportedOperationException(); //TODO
         }
 
     }
