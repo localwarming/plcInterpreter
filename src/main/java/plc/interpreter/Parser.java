@@ -3,6 +3,8 @@ package plc.interpreter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The parser takes the sequence of tokens emitted by the lexer and turns that
@@ -41,73 +43,33 @@ public final class Parser {
         throw new UnsupportedOperationException(); //TODO
     }
 
-    /**
-     * Parses an AST from the given tokens based on the provided grammar. Like
-     * the lexToken method, you may find it helpful to have this call other
-     * methods like {@code parseTerm()}. In a recursive descent parser, each
-     * rule in the grammar would correspond with a {@code parseX()} function.
-     *
-     * Additionally, here is an example of parsing a function call in a language
-     * like Java, which has the form {@code name(args...)}.
-     *
-     * <pre>
-     * {@code
-     *     private Ast.FunctionExpr parseFunctionExpr() {
-     *         //In a real parser this would be more complex, as the parser
-     *         //wouldn't know this should be a function call until reaching the
-     *         //opening parenthesis, like name(... <- here. You won't have this
-     *         //problem in this project, but will for the compiler project.
-     *         if (!match(Token.Type.IDENTIFIER)) {
-     *             throw new ParseException("Expected the name of a function.");
-     *         }
-     *         String name = tokens.get(-1).getLiteral();
-     *         if (!match("(")) {
-     *             throw new ParseException("Expected opening bra
-     *         }
-     *         List<Ast> args = new ArrayList<>();
-     *         while (!match(")")) {
-     *             //recursive call to parseExpr(), not shown here
-     *             args.add(parseExpr());
-     *             //next token must be a closing parenthesis or comma
-     *             if (!peek(")") && !match(",")) {
-     *                 throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
-     *             }
-     *         }
-     *         return new Ast.FunctionExpr(name, args);
-     *     }
-     * }
-     * </pre>
-     */
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        if (!match(Token.Type.IDENTIFIER)) {
-            throw new ParseException("Expected the name of a function", tokens.index);
-        }
-        String name = tokens.get(-1).getLiteral();
-        if (!match("(")) {
-            throw new ParseException("Need opening bracket", 0);
-        }
-        List<Ast> args = new ArrayList<>();
-        while (!match(")")) {
+        if (match("(")) {
+            String name = tokens.get(0).getLiteral();
+            tokens.advance();
+            List<Ast> args = new ArrayList<>();
+            while (!match(")")) {
+                if (peek("\"")) {
+                    args.add(parseStringLiteral());
+                } else if (peek("[+-]","[0-9]") | peek("[0-9]")) {
+                    args.add(parseNumberLiteral());
+                } else if (peek("[A-Za-z_+\\-*/:!?<>=]")){
+                    args.add(parseIdentifier());
+                } else if (peek("(")) {
+                    args.add(parseAst());
+                }
 
-            //recursive part
-            if (peek("\"")) {
-                return parseIdentifier();
-            } else if (peek("[+-*\\]","[0-9]") | peek("[0-9]")) {
-                return parseNumberLiteral();
-            } else if (peek("\"")){
-                return parseStringLiteral();
-            } else {
-                tokens.advance();
+                if (!tokens.has(0)) {
+                    throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
+                }
+                return new Ast.Term(name, args);
             }
-
-            if (!peek(")") && !match(",")) {
-                throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
-            }
-
-            return new Ast.Term(name, args);
+        } else {
+            throw new ParseException("Expected opening (", tokens.index);
         }
+
 
         // will remove this later
         return null;
@@ -125,24 +87,15 @@ public final class Parser {
 
     }
 
-    /**
-     * As in the lexer, returns {@code true} if the current sequence of tokens
-     * matches the given patterns. Unlike the lexer, the pattern is not a regex;
-     * instead it is either a {@link Token.Type}, which matches if the token's
-     * type is the same, or a {@link String}, which matches if the token's
-     * literal is the same.
-     *
-     * In other words, {@code Token(IDENTIFIER, "literal")} is matched by both
-     * {@code peek(Token.Type.IDENTIFIER)} and {@code peek("literal")}.
-     */
     private boolean peek(Object... patterns) {
-        throw new UnsupportedOperationException(); //TODO
+        for (int i = 0; i < patterns.length; i++) {
+            if (!tokens.has(i) || (patterns[i] != tokens.get(i) && patterns[i] != tokens.get(i).toString())) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    /**
-     * As in the lexer, returns {@code true} if {@link #peek(Object...)} is true
-     * and advances the token stream.
-     */
     private boolean match(Object... patterns) {
         for(Object pattern : patterns) {
             if (peek(pattern)) {
