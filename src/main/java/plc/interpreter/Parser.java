@@ -37,7 +37,6 @@ public final class Parser {
      * {@link Ast.Term} with the identifier {@code "source"}.
      */
 
-
     private Ast parse() {
         throw new UnsupportedOperationException(); //TODO
     }
@@ -82,7 +81,48 @@ public final class Parser {
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        throw new UnsupportedOperationException(); //TODO
+        if (!match(Token.Type.IDENTIFIER)) {
+            throw new ParseException("Expected the name of a function", tokens.index);
+        }
+        String name = tokens.get(-1).getLiteral();
+        if (!match("(")) {
+            throw new ParseException("Need opening bracket", 0);
+        }
+        List<Ast> args = new ArrayList<>();
+        while (!match(")")) {
+
+            //recursive part
+            if (peek("\"")) {
+                return parseIdentifier();
+            } else if (peek("[+-*\\]","[0-9]") | peek("[0-9]")) {
+                return parseNumberLiteral();
+            } else if (peek("\"")){
+                return parseStringLiteral();
+            } else {
+                tokens.advance();
+            }
+
+            if (!peek(")") && !match(",")) {
+                throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
+            }
+
+            return new Ast.Term(name, args);
+        }
+
+        // will remove this later
+        return null;
+    }
+
+    Ast.Identifier parseIdentifier() {
+
+    }
+
+    Ast.NumberLiteral parseNumberLiteral() {
+
+    }
+
+    Ast.StringLiteral parseStringLiteral() {
+
     }
 
     /**
