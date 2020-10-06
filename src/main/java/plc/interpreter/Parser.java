@@ -42,6 +42,7 @@ public final class Parser {
     private Ast parse() {
         List<Ast> sourceArgs = new ArrayList<Ast>();
         while (tokens.has(0)) {
+            System.out.println("adding args: " + tokens.get(0).getLiteral());
             sourceArgs.add(parseAst());
         }
         return new Ast.Term("source", sourceArgs);
@@ -50,28 +51,30 @@ public final class Parser {
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        if (match("(")) {
+        if (match("(") || match("[")) {
             String name = tokens.get(0).getLiteral();
             tokens.advance();
             List<Ast> args = new ArrayList<>();
-            while (!match(")")) {
+            while (!match(")") && !match("]")) {
                 if (peek(Token.Type.STRING)) {
                     args.add(new Ast.StringLiteral(tokens.get(0).getLiteral()));
+                    tokens.advance();
                 } else if (peek(Token.Type.NUMBER)) {
                     args.add(new Ast.NumberLiteral(new BigDecimal(tokens.get(0).getLiteral())));
+                    tokens.advance();
                 } else if (peek(Token.Type.IDENTIFIER)){
                     args.add(new Ast.Identifier(tokens.get(0).getLiteral()));
-                } else if (peek("(")) {
+                    tokens.advance();
+                } else if (peek("(") || peek("[")) {
                     args.add(parseAst());
+                } else {
+                    throw new ParseException("Invalid Character", 0);
                 }
-                else { throw new ParseException("Invalid Character", 0); }
-
-                tokens.advance();
+                System.out.println(name + " :: " + tokens.get(0).getLiteral());
                 if (!tokens.has(0)) {
                     throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
                 }
             }
-            tokens.advance();
             return new Ast.Term(name, args);
         }
         throw new ParseException("Expected starting (", 0);
