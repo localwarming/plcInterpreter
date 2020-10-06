@@ -34,7 +34,15 @@ public final class Parser {
             List<Ast> args = new ArrayList<>();
             while (!match(")") && !match("]")) {
                 if (peek(Token.Type.STRING)) {
-                    args.add(new Ast.StringLiteral(tokens.get(0).getLiteral()));
+                    String tempLiteral = tokens.get(0).getLiteral();
+                    tempLiteral = tempLiteral.replaceAll("\\\\b", "\b");
+                    tempLiteral = tempLiteral.replaceAll("\\\\n", "\n");
+                    tempLiteral = tempLiteral.replaceAll("\\\\r", "\r");
+                    tempLiteral = tempLiteral.replaceAll("\\\\t", "\t");
+                    tempLiteral = tempLiteral.replaceAll("\\\\'", "\'");
+                    tempLiteral = tempLiteral.replaceAll("\\\\\"", "\"");
+                    tempLiteral = tempLiteral.replaceAll("\\\\\\\\", "\\");
+                    args.add(new Ast.StringLiteral(tempLiteral));
                     tokens.advance();
                 } else if (peek(Token.Type.NUMBER)) {
                     args.add(new Ast.NumberLiteral(new BigDecimal(tokens.get(0).getLiteral())));
