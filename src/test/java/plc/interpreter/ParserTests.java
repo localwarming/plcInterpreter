@@ -32,6 +32,9 @@ final class ParserTests {
                         new Ast.Term("print", Arrays.asList(new Ast.Identifier("x"))),
                         new Ast.Term("print", Arrays.asList(new Ast.Identifier("y"))),
                         new Ast.Term("print", Arrays.asList(new Ast.Identifier("z")))
+                )),
+                Arguments.of("Not Term", "identifier", Arrays.asList(
+                        new Ast.Identifier("identifier")
                 ))
         );
     }

@@ -42,7 +42,7 @@ public final class Parser {
     private Ast parse() {
         List<Ast> sourceArgs = new ArrayList<Ast>();
         while (tokens.has(0)) {
-            System.out.println("adding args: " + tokens.get(0).getLiteral());
+            //System.out.println("adding args: " + tokens.get(0).getLiteral());
             sourceArgs.add(parseAst());
         }
         return new Ast.Term("source", sourceArgs);
@@ -57,6 +57,7 @@ public final class Parser {
             List<Ast> args = new ArrayList<>();
             while (!match(")") && !match("]")) {
                 if (peek(Token.Type.STRING)) {
+
                     args.add(new Ast.StringLiteral(tokens.get(0).getLiteral()));
                     tokens.advance();
                 } else if (peek(Token.Type.NUMBER)) {
@@ -70,7 +71,7 @@ public final class Parser {
                 } else {
                     throw new ParseException("Invalid Character", 0);
                 }
-                System.out.println(name + " :: " + tokens.get(0).getLiteral());
+                //System.out.println(name + " :: " + tokens.get(0).getLiteral());
                 if (!tokens.has(0)) {
                     throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
                 }
