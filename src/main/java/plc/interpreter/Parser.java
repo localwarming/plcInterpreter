@@ -40,52 +40,48 @@ public final class Parser {
      */
 
     private Ast parse() {
-        throw new UnsupportedOperationException(); //TODO
+        String name = tokens.get(0).getLiteral();
+        tokens.advance();
+        List<Ast> args = new ArrayList<>();
+        if (match("(")) {
+            while (!match(")")) {
+                args.add(parseAst());
+            }
+        } else {
+            throw new ParseException("Expected opening (", tokens.index);
+        }
+        return new Ast.Term(name, args);
     }
 
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        if (match("(")) {
-            String name = tokens.get(0).getLiteral();
-            tokens.advance();
-            List<Ast> args = new ArrayList<>();
-            while (!match(")")) {
-                if (peek("\"")) {
-                    args.add(parseStringLiteral());
-                } else if (peek("[+-]","[0-9]") | peek("[0-9]")) {
-                    args.add(parseNumberLiteral());
-                } else if (peek("[A-Za-z_+\\-*/:!?<>=]")){
-                    args.add(parseIdentifier());
-                } else if (peek("(")) {
-                    args.add(parseAst());
-                }
+        String name = tokens.get(0).getLiteral();
+        tokens.advance();
+        List<Ast> args = new ArrayList<>();
 
-                if (!tokens.has(0)) {
-                    throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
-                }
-                return new Ast.Term(name, args);
-            }
-        } else {
-            throw new ParseException("Expected opening (", tokens.index);
+        if (peek(Token.Type.STRING)) {
+            Ast.StringLiteral tempStringLiteral = new Ast.StringLiteral(tokens.get(0).getLiteral());
+            args.add(tempStringLiteral);
+        } else if (peek(Token.Type.NUMBER)) {
+            BigDecimal temp = new BigDecimal(tokens.get(0).getLiteral());
+            Ast.NumberLiteral tempNumberLiteral = new Ast.NumberLiteral(temp);
+            args.add(tempNumberLiteral);
+        } else if (peek(Token.Type.IDENTIFIER)){
+            Ast.Identifier tempIdentifier = new Ast.Identifier(tokens.get(0).getLiteral());
+            args.add(tempIdentifier);
+        } else if (peek("(")) {
+            args.add(parseAst());
+        }
+        tokens.advance();
+
+        if (!tokens.has(0)) {
+            throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
         }
 
-
-        // will remove this later
-        return null;
+       return new Ast.Term(name, args);
     }
 
-    Ast.Identifier parseIdentifier() {
-
-    }
-
-    Ast.NumberLiteral parseNumberLiteral() {
-
-    }
-
-    Ast.StringLiteral parseStringLiteral() {
-
-    }
 
     private boolean peek(Object... patterns) {
         for (int i = 0; i < patterns.length; i++) {
