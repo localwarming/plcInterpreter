@@ -1,5 +1,6 @@
 package plc.interpreter;
 
+import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -173,9 +174,18 @@ public final class Lexer {
         }
 
         Token emit(Token.Type type) {
+
             Token token = new Token(type, input.substring(index - length, index), index - length);
             if (type == Token.Type.STRING) {
-                token = new Token(type, input.substring(index - length +1, index-1), index - length+1);
+                String tokenName = input.substring(index - length +1, index-1);
+                tokenName = tokenName.replaceAll("\\\\b", "\b");
+                tokenName = tokenName.replaceAll("\\\\n", "\n");
+                tokenName = tokenName.replaceAll("\\\\r", "\r");
+                tokenName = tokenName.replaceAll("\\\\t", "\t");
+                tokenName = tokenName.replaceAll("\\\\'", "\'");
+                tokenName = tokenName.replaceAll("\\\\\"", "\"");
+                tokenName = tokenName.replaceAll("\\\\\\\\", "\\");
+                token = new Token(type, tokenName, index - length+1);
             }
             reset();
             return token;

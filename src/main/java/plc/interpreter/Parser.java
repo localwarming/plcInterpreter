@@ -6,19 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * The parser takes the sequence of tokens emitted by the lexer and turns that
- * into a structured representation of the program, called the Abstract Syntax
- * Tree (AST).
- *
- * The parser has a similar architecture to the lexer, just with {@link Token}s
- * instead of characters. As before, {@link #peek(Object...)} and {@link
- * #match(Object...)} are helpers to make the implementation easier.
- *
- * This type of parser is called <em>recursive descent</em>. Each rule in our
- * grammar will have it's own function, and reference to other rules correspond
- * to calling that functions.
- */
 public final class Parser {
 
     private final TokenStream tokens;
@@ -27,27 +14,17 @@ public final class Parser {
         tokens = new TokenStream(Lexer.lex(input));
     }
 
-    /**
-     * Parses the input and returns the AST
-     */
     public static Ast parse(String input) {
         return new Parser(input).parse();
     }
 
-    /**
-     * Repeatedly parses a list of ASTs, returning the list as arguments of an
-     * {@link Ast.Term} with the identifier {@code "source"}.
-     */
-
     private Ast parse() {
         List<Ast> sourceArgs = new ArrayList<Ast>();
         while (tokens.has(0)) {
-            System.out.println("adding args: " + tokens.get(0).getLiteral());
             sourceArgs.add(parseAst());
         }
         return new Ast.Term("source", sourceArgs);
     }
-
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
@@ -70,7 +47,6 @@ public final class Parser {
                 } else {
                     throw new ParseException("Invalid Character", 0);
                 }
-                System.out.println(name + " :: " + tokens.get(0).getLiteral());
                 if (!tokens.has(0)) {
                     throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
                 }
