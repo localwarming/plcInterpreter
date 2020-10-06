@@ -33,35 +33,31 @@ public final class Parser {
             tokens.advance();
             List<Ast> args = new ArrayList<>();
             while (!match(")") && !match("]")) {
-                if (peek(Token.Type.STRING)) {
-                    String tempLiteral = tokens.get(0).getLiteral();
-                    tempLiteral = tempLiteral.replaceAll("\\\\b", "\b");
-                    tempLiteral = tempLiteral.replaceAll("\\\\n", "\n");
-                    tempLiteral = tempLiteral.replaceAll("\\\\r", "\r");
-                    tempLiteral = tempLiteral.replaceAll("\\\\t", "\t");
-                    tempLiteral = tempLiteral.replaceAll("\\\\'", "\'");
-                    tempLiteral = tempLiteral.replaceAll("\\\\\"", "\"");
-                    tempLiteral = tempLiteral.replaceAll("\\\\\\\\", "\\");
-                    args.add(new Ast.StringLiteral(tempLiteral));
-                    tokens.advance();
-                } else if (peek(Token.Type.NUMBER)) {
-                    args.add(new Ast.NumberLiteral(new BigDecimal(tokens.get(0).getLiteral())));
-                    tokens.advance();
-                } else if (peek(Token.Type.IDENTIFIER)){
-                    args.add(new Ast.Identifier(tokens.get(0).getLiteral()));
-                    tokens.advance();
-                } else if (peek("(") || peek("[")) {
-                    args.add(parseAst());
-                } else {
-                    throw new ParseException("Invalid Character", 0);
-                }
-                if (!tokens.has(0)) {
-                    throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
-                }
+                args.add(parseAst());
             }
             return new Ast.Term(name, args);
+        } else if (peek(Token.Type.STRING)) {
+            String tempLiteral = tokens.get(0).getLiteral();
+            tempLiteral = tempLiteral.replaceAll("\\\\b", "\b");
+            tempLiteral = tempLiteral.replaceAll("\\\\n", "\n");
+            tempLiteral = tempLiteral.replaceAll("\\\\r", "\r");
+            tempLiteral = tempLiteral.replaceAll("\\\\t", "\t");
+            tempLiteral = tempLiteral.replaceAll("\\\\'", "\'");
+            tempLiteral = tempLiteral.replaceAll("\\\\\"", "\"");
+            tempLiteral = tempLiteral.replaceAll("\\\\\\\\", "\\");
+            tokens.advance();
+            return new Ast.StringLiteral(tempLiteral);
+        } else if (peek(Token.Type.NUMBER)) {
+            String literal = tokens.get(0).getLiteral();
+            tokens.advance();
+            return new Ast.NumberLiteral(new BigDecimal(literal));
+        } else if (peek(Token.Type.IDENTIFIER)){
+            String literal = tokens.get(0).getLiteral();
+            tokens.advance();
+            return new Ast.Identifier(literal);
+        } else {
+            throw new ParseException("Invalid Character", 0);
         }
-        throw new ParseException("Expected starting (", 0);
     }
 
 
