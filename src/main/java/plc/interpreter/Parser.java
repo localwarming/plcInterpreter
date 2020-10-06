@@ -40,19 +40,16 @@ public final class Parser {
      */
 
     private Ast parse() {
-        String name = tokens.get(0).getLiteral();
-        tokens.advance();
-        List<Ast> args = new ArrayList<>();
-        while (tokens.has(0)) {
-            args.add(parseAst());
-        }
-        return new Ast.Term(name, args);
+        return parseAst();
     }
 
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
+        //System.out.println(tokens.get(0).getLiteral());
+        //System.out.println(peek("("));
         if (match("(")) {
+            System.out.println(tokens.get(0).getLiteral());
             String name = tokens.get(0).getLiteral();
             tokens.advance();
             List<Ast> args = new ArrayList<>();
@@ -66,13 +63,12 @@ public final class Parser {
                 } else if (peek("(")) {
                     args.add(parseAst());
                 }
+                tokens.advance();
+                if (!tokens.has(0)) {
+                    throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
+                }
             }
-            tokens.advance();
             return new Ast.Term(name, args);
-        }
-
-        if (!tokens.has(0)) {
-            throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
         }
         throw new ParseException("Expected starting (", 0);
     }
@@ -80,7 +76,7 @@ public final class Parser {
 
     private boolean peek(Object... patterns) {
         for (int i = 0; i < patterns.length; i++) {
-            if (!tokens.has(i) || (patterns[i] != tokens.get(i) && patterns[i] != tokens.get(i).toString())) {
+            if (!tokens.has(i) || (patterns[i] != tokens.get(i) && !patterns[i].equals(tokens.get(i).getLiteral()))) {
                 return false;
             }
         }
@@ -89,12 +85,11 @@ public final class Parser {
 
     private boolean match(Object... patterns) {
         for(Object pattern : patterns) {
-            if (peek(pattern)) {
-                tokens.advance();
-                return true;
+            if (!peek(pattern)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private static final class TokenStream {
