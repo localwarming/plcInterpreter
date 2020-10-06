@@ -1,5 +1,6 @@
 package plc.interpreter;
 
+import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
