@@ -40,16 +40,17 @@ public final class Parser {
      */
 
     private Ast parse() {
-        return parseAst();
+        List<Ast> sourceArgs = new ArrayList<Ast>();
+        while (tokens.has(0)) {
+            sourceArgs.add(parseAst());
+        }
+        return new Ast.Term("source", sourceArgs);
     }
 
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        //System.out.println(tokens.get(0).getLiteral());
-        //System.out.println(peek("("));
         if (match("(")) {
-            System.out.println(tokens.get(0).getLiteral());
             String name = tokens.get(0).getLiteral();
             tokens.advance();
             List<Ast> args = new ArrayList<>();
@@ -68,6 +69,7 @@ public final class Parser {
                     throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
                 }
             }
+            tokens.advance();
             return new Ast.Term(name, args);
         }
         throw new ParseException("Expected starting (", 0);
@@ -76,7 +78,7 @@ public final class Parser {
 
     private boolean peek(Object... patterns) {
         for (int i = 0; i < patterns.length; i++) {
-            if (!tokens.has(i) || (patterns[i] != tokens.get(i) && !patterns[i].equals(tokens.get(i).getLiteral()))) {
+            if (!tokens.has(i) || (!patterns[i].equals(tokens.get(i).getType()) && !patterns[i].equals(tokens.get(i).getLiteral()))) {
                 return false;
             }
         }
@@ -84,11 +86,12 @@ public final class Parser {
     }
 
     private boolean match(Object... patterns) {
-        for(Object pattern : patterns) {
+        for (Object pattern : patterns) {
             if (!peek(pattern)) {
                 return false;
             }
         }
+        tokens.advance(patterns.length);
         return true;
     }
 
@@ -101,31 +104,20 @@ public final class Parser {
             this.tokens = tokens;
         }
 
-        /**
-         * Returns true if there is a token at index + offset.
-         */
         public boolean has(int offset) {
-            if((index + offset) > tokens.size()){
-                return false;
-            }
-            else{
-                //there is a token
-                return true;
-            }
+            return (index + offset) < tokens.size();
         }
 
-        /**
-         * Gets the token at index + offset.
-         */
         public Token get(int offset) {
             return tokens.get(index + offset);
         }
 
-        /**
-         * Advances to the next token, incrementing the index.
-         */
         public void advance() {
             index++;
+        }
+
+        public void advance(int offset) {
+            index += offset;
         }
 
     }

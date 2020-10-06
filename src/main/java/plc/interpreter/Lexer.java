@@ -120,7 +120,7 @@ public final class Lexer {
         return chars.emit(Token.Type.STRING);
     }
 
-    private boolean checkForMatch(String[] patterns) {
+    boolean peek(String... patterns) {
         for (int i = 0; i < patterns.length; i++) {
             if (!chars.has(i)) return false;
             Pattern pattern = Pattern.compile(patterns[i]);
@@ -130,17 +130,14 @@ public final class Lexer {
         return true;
     }
 
-    boolean peek(String... patterns) {
-        return checkForMatch(patterns);
-    }
-
     boolean match(String... patterns) {
-        if (checkForMatch(patterns)) {
-            chars.advance(patterns.length);
-            return true;
-        } else {
-            return false;
+        for (String pattern : patterns) {
+            if (!peek(pattern)) {
+                return false;
+            }
         }
+        chars.advance(patterns.length);
+        return true;
     }
 
     static final class CharStream {
@@ -177,6 +174,9 @@ public final class Lexer {
 
         Token emit(Token.Type type) {
             Token token = new Token(type, input.substring(index - length, index), index - length);
+            if (type == Token.Type.STRING) {
+                token = new Token(type, input.substring(index - length +1, index-1), index - length+1);
+            }
             reset();
             return token;
         }
