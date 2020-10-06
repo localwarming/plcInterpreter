@@ -22,13 +22,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">20</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">18</div>
 <p>failures</p>
 </div>
 </td>
@@ -40,7 +40,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.022s</div>
+<div class="counter">2.862s</div>
 <p>duration</p>
 </div>
 </td>
@@ -49,8 +49,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">10%</div>
 <p>successful</p>
 </div>
 </td>
@@ -60,10 +60,93 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Classes</a>
+<a href="#tab0">Failed tests</a>
+</li>
+<li>
+<a href="#tab1">Classes</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testExample1()">testExample1()</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testExample2()">testExample2()</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testExample3()">testExample3()</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testIdentifier(String, String, List)[1]">[1] Alphanumeric, (print abc123), [(print abc123)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testIdentifier(String, String, List)[2]">[2] Symbols, (print &lt;=&gt;), [(print &lt;=&gt;)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testNumber(String, String, List)[1]">[1] Decimal, (print 1.5), [(print 1.5)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testNumber(String, String, List)[2]">[2] Signed, (print -2), [(print -2)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testNumber(String, String, List)[3]">[3] Precision, (print 123456789123456789.123456789123456789), [(print 123456789123456789.123456789123456789)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testSource(String, String, List)[1]">[1] Empty, , []</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testSource(String, String, List)[2]">[2] Single, (print x), [(print x)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testSource(String, String, List)[3]">[3] Multiple, (print x)
+(print y)
+(print z), [(print x), (print y), (print z)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testString(String, String, List)[1]">[1] Empty, (print &quot;&quot;), [(print &quot;&quot;)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testString(String, String, List)[2]">[2] Alphanumeric, (print &quot;abc123&quot;), [(print &quot;abc123&quot;)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testString(String, String, List)[3]">[3] Escape, (print &quot;new\nline&quot;), [(print &quot;new
+line&quot;)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testTerm(String, String, List)[1]">[1] Empty Args, (print), [(print )]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testTerm(String, String, List)[2]">[2] Single Arg, (print x), [(print x)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testTerm(String, String, List)[3]">[3] Multiple Args, (print x y z), [(print x y z)]</a>
+</li>
+<li>
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>.
+<a href="../classes/plc.interpreter.ParserTests.html#testTerm(String, String, List)[4]">[4] Nested, (print (f x)), [(print (f x))]</a>
+</li>
+</ul>
+</div>
+<div id="tab1" class="tab">
 <h2>Classes</h2>
 <table>
 <thread>
@@ -77,14 +160,14 @@
 </tr>
 </thread>
 <tr>
-<td class="success">
-<a href="../classes/plc.interpreter.LexerTests.html">LexerTests</a>
+<td class="failures">
+<a href="../classes/plc.interpreter.ParserTests.html">ParserTests</a>
 </td>
-<td>1</td>
+<td>20</td>
+<td>18</td>
 <td>0</td>
-<td>0</td>
-<td>0.022s</td>
-<td class="success">100%</td>
+<td>2.862s</td>
+<td class="failures">10%</td>
 </tr>
 </table>
 </div>
@@ -96,7 +179,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.3</a> at Sep 21, 2020, 10:26:12 PM</p>
+<a href="http://www.gradle.org">Gradle 6.3</a> at Oct 5, 2020 9:30:11 PM</p>
 </div>
 </div>
 </body>
