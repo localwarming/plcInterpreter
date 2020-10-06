@@ -64,6 +64,8 @@ public final class Parser {
                 } else if (peek("(")) {
                     args.add(parseAst());
                 }
+                else { throw new ParseException("Invalid Character", 0); }
+
                 tokens.advance();
                 if (!tokens.has(0)) {
                     throw new ParseException("Expected closing parenthesis or comma after argument.", tokens.get(-1).getIndex());
