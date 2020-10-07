@@ -175,9 +175,6 @@ public final class Lexer {
 
         Token emit(Token.Type type) {
             Token token = new Token(type, input.substring(index - length, index), index - length);
-            if (type == Token.Type.STRING) {
-                token = new Token(type, input.substring(index - length +1, index-1), index - length+1);
-            }
             reset();
             return token;
         }

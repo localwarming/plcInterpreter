@@ -38,6 +38,7 @@ public final class Parser {
             return new Ast.Term(name, args);
         } else if (peek(Token.Type.STRING)) {
             String tempLiteral = tokens.get(0).getLiteral();
+            tempLiteral = tempLiteral.substring(1,tempLiteral.length()-1);
             tempLiteral = tempLiteral.replaceAll("\\\\b", "\b");
             tempLiteral = tempLiteral.replaceAll("\\\\n", "\n");
             tempLiteral = tempLiteral.replaceAll("\\\\r", "\r");
