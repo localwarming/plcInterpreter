@@ -100,7 +100,6 @@ public final class Interpreter {
             out.println();
             return VOID;
         });
-        //TODO: Additional standard library functions
 
         //Math Functions
 
@@ -123,7 +122,7 @@ public final class Interpreter {
         scope.define("-",  (Function<List<Ast>, Object>) args -> {
             List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
             if(evaluated.isEmpty()){
-                throw new EvalException("Argumants to - cannot be empty");
+                throw new EvalException("Arguments to - cannot be empty");
             }
             else if(evaluated.size() == 1) {
                 return evaluated.get(0).negate();
@@ -228,6 +227,8 @@ public final class Interpreter {
             }
         });
 
+        //TODO: and, or, (<, <=, >, >=)
+
         //Sequence Functions
 
         //LIST
@@ -242,7 +243,15 @@ public final class Interpreter {
             }
         });
 
+        //TODO: range
+
+        //TODO: define, set!
+
         //State Functions
+
+
+
+        //TODO: do, while, for
 
         //Control Flow Functions
     }
