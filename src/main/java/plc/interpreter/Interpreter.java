@@ -4,6 +4,7 @@ import javax.jws.Oneway;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -214,22 +215,32 @@ public final class Interpreter {
             if (args.size() != 1) {
                 throw new EvalException("not requires a single arg");
             }
-            if (requireType(Boolean.class), eval(args.get(0))) {
+            if (requireType(Boolean.class, eval(args.get(0)))) {
                 if(eval(args.get(0)).equals(true)){
                     return false;
                 }
-                else if(eval(args.get(0)).equals(false)){
+                else{
                     return true;
                 }
-
             }
             else{
                 throw new EvalException("error, arg must be of boolean type");
             }
         });
 
-
         //Sequence Functions
+
+        //LIST
+        scope.define("list",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> myList = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+
+           if(myList.size() == 1) {
+                return "[]";
+            }
+            else{
+                return myList;
+            }
+        });
 
         //State Functions
 
