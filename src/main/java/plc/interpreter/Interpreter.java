@@ -132,6 +132,21 @@ public final class Interpreter {
                 return num;
             }
         });
+
+        //MULTIPLICATION
+        scope.define("*",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+            if(evaluated.isEmpty()){
+                return 1;
+            }
+            else {
+                BigDecimal num = evaluated.get(0);
+                for (int i = 1; i < evaluated.size(); i++) {
+                    num = num.multiply(evaluated.get(i));
+                }
+                return num;
+            }
+        });
     }
 
     /**
