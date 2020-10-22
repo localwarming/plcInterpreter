@@ -196,7 +196,7 @@ public final class Interpreter {
             return false;
         });
 
-        //EQUALS
+        //EQUALS?
         scope.define("equals?",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2) {
                 throw new EvalException("equals compares 2 args");
@@ -207,8 +207,27 @@ public final class Interpreter {
             else{
                 return false;
             }
-
         });
+
+        //NOT
+        scope.define("not",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 1) {
+                throw new EvalException("not requires a single arg");
+            }
+            if (requireType(Boolean.class), eval(args.get(0))) {
+                if(eval(args.get(0)).equals(true)){
+                    return false;
+                }
+                else if(eval(args.get(0)).equals(false)){
+                    return true;
+                }
+
+            }
+            else{
+                throw new EvalException("error, arg must be of boolean type");
+            }
+        });
+
 
         //Sequence Functions
 
