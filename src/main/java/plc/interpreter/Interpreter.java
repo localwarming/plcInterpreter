@@ -1,9 +1,11 @@
 package plc.interpreter;
 
+import javax.jws.Oneway;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -168,6 +170,51 @@ public final class Interpreter {
                 return num;
             }
         });
+
+        //IF STATEMENT EXAMPLE
+        scope.define("if",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 3) {
+                throw new EvalException("if requires 3 args");
+            }
+            if (requireType(Boolean.class, eval(args.get(0)))) {
+                return eval(args.get(1));
+            }
+            else{
+                return eval(args.get(2));
+            }
+        });
+
+        //Comparison & Equality Functions
+
+        // TRUE
+        scope.define("true",  (Function<List<Ast>, Object>) args -> {
+            return true;
+        });
+
+        //FALSE
+        scope.define("false",  (Function<List<Ast>, Object>) args -> {
+            return false;
+        });
+
+        //EQUALS
+        scope.define("equals?",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 2) {
+                throw new EvalException("equals compares 2 args");
+            }
+            if (Objects.deepEquals(eval(args.get(0)), eval(args.get(1)))) {
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        });
+
+        //Sequence Functions
+
+        //State Functions
+
+        //Control Flow Functions
     }
 
     /**
