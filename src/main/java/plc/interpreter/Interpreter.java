@@ -2,6 +2,7 @@ package plc.interpreter;
 
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -143,6 +144,26 @@ public final class Interpreter {
                 BigDecimal num = evaluated.get(0);
                 for (int i = 1; i < evaluated.size(); i++) {
                     num = num.multiply(evaluated.get(i));
+                }
+                return num;
+            }
+        });
+
+        //DIVISION
+        scope.define("/",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+            if(evaluated.isEmpty()){
+                throw new ArithmeticException("Divisor cannot be 0");
+            }
+            else if(evaluated.size() == 1) {
+                //get inverse
+                BigDecimal one = BigDecimal.valueOf(1);
+                return one.divide(evaluated.get(0), RoundingMode.HALF_EVEN);
+            }
+            else{
+                BigDecimal num = evaluated.get(0);
+                for(int i = 1; i < evaluated.size(); i++) {
+                    num = num.divide(evaluated.get(i), RoundingMode.HALF_EVEN);
                 }
                 return num;
             }
