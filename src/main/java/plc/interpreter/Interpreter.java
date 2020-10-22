@@ -105,7 +105,7 @@ public final class Interpreter {
         scope.define("+",  (Function<List<Ast>, Object>) args -> {
             List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
             if(evaluated.isEmpty()){
-                return 0;
+                return BigDecimal.valueOf(0);
             }
             else {
                 BigDecimal num = evaluated.get(0);
@@ -138,7 +138,7 @@ public final class Interpreter {
         scope.define("*",  (Function<List<Ast>, Object>) args -> {
             List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
             if(evaluated.isEmpty()){
-                return 1;
+                return BigDecimal.valueOf(1);
             }
             else {
                 BigDecimal num = evaluated.get(0);
