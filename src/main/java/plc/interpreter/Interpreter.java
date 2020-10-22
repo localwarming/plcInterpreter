@@ -97,6 +97,41 @@ public final class Interpreter {
             return VOID;
         });
         //TODO: Additional standard library functions
+
+        //Math Functions
+
+        //ADDITION
+        scope.define("+",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+            if(evaluated.isEmpty()){
+                return 0;
+            }
+            else {
+                BigDecimal num = evaluated.get(0);
+                for (int i = 1; i < evaluated.size(); i++) {
+                    num = num.add(evaluated.get(i));
+                }
+                return num;
+            }
+        });
+
+        //SUBTRACTION
+        scope.define("-",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+            if(evaluated.isEmpty()){
+                throw new EvalException("Argumants to - cannot be empty");
+            }
+            else if(evaluated.size() == 1) {
+                return evaluated.get(0).negate();
+            }
+            else{
+                BigDecimal num = evaluated.get(0);
+                for(int i = 1; i < evaluated.size(); i++) {
+                    num = num.subtract(evaluated.get(i));
+                }
+                return num;
+            }
+        });
     }
 
     /**
