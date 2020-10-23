@@ -229,7 +229,15 @@ public final class Interpreter {
 
         //TODO: and, or, (<, <=, >, >=)
 
+        //AND
+
+        //OR
+
+        //<, <=, >, >=
+
+
         //Sequence Functions
+
 
         //LIST
         scope.define("list",  (Function<List<Ast>, Object>) args -> {
@@ -248,8 +256,6 @@ public final class Interpreter {
         //TODO: define, set!
 
         //State Functions
-
-
 
         //TODO: do, while, for
 
