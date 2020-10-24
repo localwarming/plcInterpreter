@@ -253,8 +253,27 @@ public final class Interpreter {
             }
         });
 
-
         //OR
+
+        scope.define("or",  (Function<List<Ast>, Object>) args -> {
+            if(args.size() == 0) {
+                return false;
+            }
+            if(requireType(Boolean.class, true)) {
+                for(int i = 0; i < args.size(); i++) {
+                    if(eval(args.get(i)).equals(true)){
+                        return true;
+                    }
+                    else if(requireType(Boolean.class, eval(args.get(i)))){
+                        return false;
+                    }
+                }
+                return false;
+            }
+            else {
+                return new EvalException("error, arg must be of boolean type");
+            }
+        });
 
         //<, <=, >, >=
 
