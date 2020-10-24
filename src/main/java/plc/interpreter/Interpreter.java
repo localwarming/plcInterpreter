@@ -188,12 +188,12 @@ public final class Interpreter {
 
         // TRUE
         scope.define("true",  (Function<List<Ast>, Object>) args -> {
-            return true;
+            return new Ast.Identifier("true");
         });
 
         //FALSE
         scope.define("false",  (Function<List<Ast>, Object>) args -> {
-            return false;
+            return new Ast.Identifier("false");
         });
 
         //EQUALS?
@@ -227,9 +227,32 @@ public final class Interpreter {
             }
         });
 
-        //TODO: and, or, (<, <=, >, >=)
+        //TODO: or, (<, <=, >, >=)
 
         //AND
+
+        scope.define("and",  (Function<List<Ast>, Object>) args -> {
+            if(args.size() == 0) {
+                return true;
+            }
+            if (requireType(Boolean.class, true)) {
+                if(eval(args.get(0)).equals(false)) {
+                    return false;
+                }
+                else {
+                    for(int i = 0; i < args.size(); i++) {
+                       if(eval(args.get(i)).equals(false)){
+                           return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            else {
+                return new EvalException("error, arg must be of boolean type");
+            }
+        });
+
 
         //OR
 
