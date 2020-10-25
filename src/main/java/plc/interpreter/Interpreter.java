@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Interpreter {
 
@@ -227,56 +228,59 @@ public final class Interpreter {
             }
         });
 
-        //TODO: or, (<, <=, >, >=)
-
         //AND
-
         scope.define("and",  (Function<List<Ast>, Object>) args -> {
-            if(args.size() == 0) {
-                return true;
-            }
-            if (requireType(Boolean.class, true)) {
-                if(eval(args.get(0)).equals(false)) {
-                    return false;
-                }
-                else {
-                    for(int i = 0; i < args.size(); i++) {
-                       if(eval(args.get(i)).equals(false)){
-                           return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-            else {
-                return new EvalException("error, arg must be of boolean type");
-            }
+            List<Boolean> argList = args.stream().map(a -> requireType(Boolean.class, eval(a))).collect(Collectors.toList());
+            for(int i = 0; i < argList.size(); i++)
+                if (eval(args.get(i)).equals(false)) return false;
+            return true;
         });
 
         //OR
-
         scope.define("or",  (Function<List<Ast>, Object>) args -> {
-            if(args.size() == 0) {
-                return false;
-            }
-            if(requireType(Boolean.class, true)) {
-                for(int i = 0; i < args.size(); i++) {
-                    if(eval(args.get(i)).equals(true)){
-                        return true;
-                    }
-                    else if(requireType(Boolean.class, eval(args.get(i)))){
-                        return false;
-                    }
-                }
-                return false;
-            }
-            else {
-                return new EvalException("error, arg must be of boolean type");
-            }
+            List<Boolean> argList = args.stream().map(a -> requireType(Boolean.class, eval(a))).collect(Collectors.toList());
+            for(int i = 0; i < argList.size(); i++)
+                if (eval(args.get(i)).equals(true)) return true;
+            return false;
         });
 
         //<, <=, >, >=
 
+        scope.define("<", (Function<List<Ast>, Object>) args -> {
+            List<Object> argList = args.stream().map(a -> eval(a)).collect(Collectors.toList());
+            for (int i = 0; i < argList.size() - 1; i++) {
+                if (argList.get(i+1).getClass() != argList.get(i+1).getClass()) return false;
+                if (((Comparable<Object>) argList.get(i)).compareTo(argList.get(i+1)) >= 0) return false;
+            }
+            return true;
+        });
+
+        scope.define("<=", (Function<List<Ast>, Object>) args -> {
+            List<Object> argList = args.stream().map(a -> eval(a)).collect(Collectors.toList());
+            for (int i = 0; i < argList.size() - 1; i++) {
+                if (argList.get(i+1).getClass() != argList.get(i+1).getClass()) return false;
+                if (((Comparable<Object>) argList.get(i)).compareTo(argList.get(i+1)) > 0) return false;
+            }
+            return true;
+        });
+
+        scope.define(">", (Function<List<Ast>, Object>) args -> {
+            List<Object> argList = args.stream().map(a -> eval(a)).collect(Collectors.toList());
+            for (int i = 0; i < argList.size() - 1; i++) {
+                if (argList.get(i+1).getClass() != argList.get(i+1).getClass()) return false;
+                if (((Comparable<Object>) argList.get(i)).compareTo(argList.get(i+1)) <= 0) return false;
+            }
+            return true;
+        });
+
+        scope.define(">=", (Function<List<Ast>, Object>) args -> {
+            List<Object> argList = args.stream().map(a -> eval(a)).collect(Collectors.toList());
+            for (int i = 0; i < argList.size() - 1; i++) {
+                if (argList.get(i+1).getClass() != argList.get(i+1).getClass()) return false;
+                if (((Comparable<Object>) argList.get(i)).compareTo(argList.get(i+1)) < 0) return false;
+            }
+            return true;
+        });
 
         //Sequence Functions
 
@@ -284,22 +288,57 @@ public final class Interpreter {
         //LIST
         scope.define("list",  (Function<List<Ast>, Object>) args -> {
             List<BigDecimal> myList = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
-
-           if(myList.size() == 1) {
-                return "[]";
-            }
-            else{
-                return myList;
-            }
+            return new LinkedList(myList);
         });
 
-        //TODO: range
+        //RANGE
+        scope.define("range",  (Function<List<Ast>, Object>) args -> {
+            List<BigDecimal> argList = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
+
+            if (argList.size() != 2)
+                throw new EvalException("range requires 2 arguments, " + argList.size() + " provided");
+            if (argList.get(0).remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0 ||
+                    argList.get(1).remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0)
+                throw new EvalException("range requires integer arguments");
+            if (argList.get(0).intValue() > argList.get(1).intValue())
+                throw new EvalException("second range arg must be greater than first");
+
+            IntStream stream = IntStream.range(argList.get(0).intValue(), argList.get(1).intValue());
+            return stream.boxed().collect(Collectors.toCollection(LinkedList::new));
+        });
 
         //TODO: define, set!
 
         //State Functions
 
-        //TODO: do, while, for
+        //DO
+        scope.define("do",  (Function<List<Ast>, Object>) args -> {
+            if (args.isEmpty()) return VOID;
+            Scope subScope = new Scope(scope);
+            scope = subScope;
+            Object lastArg = null;
+            for (Ast arg : args) lastArg = eval(arg);
+            scope = scope.getParent();
+            return lastArg;
+        });
+
+        //WHILE
+        scope.define("while",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 2)
+                throw new EvalException("range requires 2 arguments, " + args.size() + " provided");
+            Scope subScope = new Scope(scope);
+            scope = subScope;
+            while (requireType(Boolean.class, eval(args.get(0)))) {
+                eval(args.get(1));
+            }
+            scope = scope.getParent();
+            return VOID;
+        });
+
+        //FOR
+        scope.define("for",  (Function<List<Ast>, Object>) args -> {
+            
+        });
 
         //Control Flow Functions
     }
