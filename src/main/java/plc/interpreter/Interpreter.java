@@ -325,7 +325,7 @@ public final class Interpreter {
         //WHILE
         scope.define("while",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2)
-                throw new EvalException("range requires 2 arguments, " + args.size() + " provided");
+                throw new EvalException("while requires 2 arguments, " + args.size() + " provided");
             Scope subScope = new Scope(scope);
             scope = subScope;
             while (requireType(Boolean.class, eval(args.get(0)))) {
@@ -337,7 +337,17 @@ public final class Interpreter {
 
         //FOR
         scope.define("for",  (Function<List<Ast>, Object>) args -> {
-            
+            if (args.size() != 3)
+                throw new EvalException("for requires 3 arguments, " + args.size() + " provided");
+            Scope subScope = new Scope(scope);
+            scope = subScope;
+            scope.define(requireType(Ast.Identifier.class, args.get(0)).getName(), requireType(LinkedList.class, args.get(1)).get(0));
+            for (Object num : requireType(LinkedList.class, args.get(1))) {
+                scope.set(requireType(Ast.Identifier.class, args.get(0)).getName(), num);
+                eval(args.get(2));
+            }
+            scope = scope.getParent();
+            return VOID;
         });
 
         //Control Flow Functions
