@@ -331,6 +331,16 @@ public final class Interpreter {
             }
             return VOID;
         });
+
+
+        //SET
+        scope.define("set",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 2) throw new EvalException("set requires 2 arguments");
+            scope.set(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(0)));
+            return VOID;
+        });
+
+
         //State Functions
 
         //DO
