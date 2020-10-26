@@ -310,15 +310,27 @@ public final class Interpreter {
         //TODO: define, set!
         //DEFINE
         scope.define("define",  (Function<List<Ast>, Object>) args -> {
-            if (args.isEmpty()) return VOID;
-            Scope subScope = new Scope(scope);
-            scope = subScope;
-            Object lastArg = null;
-            for (Ast arg : args) lastArg = eval(arg);
-            scope = scope.getParent();
-            return lastArg;
+            if (args.size() != 2) throw new EvalException("define requires 2 arguments");
+            if (eval(args.get(0)).getClass() == Ast.Identifier.class) {
+                scope.define(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(0)));
+            } else if (eval(args.get(0)).getClass() == Ast.Term.class) {
+                Ast.Term term = requireType(Ast.Term.class, eval(args.get(0)));
+                List funcArgs = term.getArgs();
+                scope.define(term.getName(),  (Function<List<Ast>, Object>) callingArgs -> {
+                    scope = new Scope(scope);
+                    if (funcArgs.size() != callingArgs.size())
+                        throw new EvalException("argument count does not match definition");
+                    for (int i = 0; i < funcArgs.size(); i++)
+                        scope.set(requireType(Ast.Identifier.class, funcArgs.get(i)).getName(), eval(callingArgs.get(i)));
+                    eval(args.get(1));
+                    scope = scope.getParent();
+                    return VOID;
+                });
+            } else {
+                throw new EvalException("define has incorrect argument type");
+            }
+            return VOID;
         });
-
         //State Functions
 
         //DO
@@ -335,9 +347,8 @@ public final class Interpreter {
         //WHILE
         scope.define("while",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2)
-                throw new EvalException("while requires 2 arguments, " + args.size() + " provided");
-            Scope subScope = new Scope(scope);
-            scope = subScope;
+                throw new EvalException("while requires 2 arguments");
+            scope = new Scope(scope);
             while (requireType(Boolean.class, eval(args.get(0)))) {
                 eval(args.get(1));
             }
@@ -347,14 +358,14 @@ public final class Interpreter {
 
         //FOR
         scope.define("for",  (Function<List<Ast>, Object>) args -> {
-            if (args.size() != 2 || args.get(0).getClass() != Ast.Term.class)
-                throw new EvalException("incorrect arguments for for function");
+            if (args.size() != 2)
+                throw new EvalException("for requires 2 arguments");
             scope = new Scope(scope);
-            Ast.Term term = requireType(Ast.Term.class, args.get(0));
+            Ast.Term term = requireType(Ast.Term.class, eval(args.get(0)));
             LinkedList forList = requireType(LinkedList.class, term.getArgs().get(0));
             scope.define(term.getName(), forList.get(0));
-            for (Object num : forList) {
-                scope.set(term.getName(), num);
+            for (Object item : forList) {
+                scope.set(term.getName(), item);
                 eval(args.get(2));
             }
             scope = scope.getParent();
