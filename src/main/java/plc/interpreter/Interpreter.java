@@ -157,13 +157,11 @@ public final class Interpreter {
             List<BigDecimal> evaluated = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
             if(evaluated.isEmpty()){
                 throw new ArithmeticException("Divisor cannot be 0");
-            }
-            else if(evaluated.size() == 1) {
+            } else if(evaluated.size() == 1) {
                 //get inverse
                 BigDecimal one = BigDecimal.valueOf(1);
                 return one.divide(evaluated.get(0), RoundingMode.HALF_EVEN);
-            }
-            else{
+            } else{
                 BigDecimal num = evaluated.get(0);
                 for(int i = 1; i < evaluated.size(); i++) {
                     num = num.divide(evaluated.get(i), RoundingMode.HALF_EVEN);
@@ -187,60 +185,40 @@ public final class Interpreter {
 
         //Comparison & Equality Functions
 
-        // TRUE
-        scope.define("true",  (Function<List<Ast>, Object>) args -> {
-            return new Ast.Identifier("true");
-        });
+        //TRUE
+        scope.define("true", true);
 
         //FALSE
-        scope.define("false",  (Function<List<Ast>, Object>) args -> {
-            return new Ast.Identifier("false");
-        });
+        scope.define("false", false);
 
         //EQUALS?
         scope.define("equals?",  (Function<List<Ast>, Object>) args -> {
-            if (args.size() != 2) {
+            List<Object> evaluated = args.stream().map(this::eval).collect(Collectors.toList());
+            if (evaluated.size() != 2)
                 throw new EvalException("equals compares 2 args");
-            }
-            if (Objects.deepEquals(eval(args.get(0)), eval(args.get(1)))) {
-                return true;
-            }
-            else{
-                return false;
-            }
+            return Objects.deepEquals(evaluated.get(0), evaluated.get(1));
         });
 
         //NOT
         scope.define("not",  (Function<List<Ast>, Object>) args -> {
-            if (args.size() != 1) {
+            if (args.size() != 1)
                 throw new EvalException("not requires a single arg");
-            }
-            if (requireType(Boolean.class, eval(args.get(0)))) {
-                if(eval(args.get(0)).equals(true)){
-                    return false;
-                }
-                else{
-                    return true;
-                }
-            }
-            else{
-                throw new EvalException("error, arg must be of boolean type");
-            }
+            return !requireType(Boolean.class, eval(args.get(0)));
         });
 
         //AND
         scope.define("and",  (Function<List<Ast>, Object>) args -> {
             List<Boolean> argList = args.stream().map(a -> requireType(Boolean.class, eval(a))).collect(Collectors.toList());
-            for(int i = 0; i < argList.size(); i++)
-                if (eval(args.get(i)).equals(false)) return false;
+            for(Boolean arg : argList)
+                if (!arg) return false;
             return true;
         });
 
         //OR
         scope.define("or",  (Function<List<Ast>, Object>) args -> {
             List<Boolean> argList = args.stream().map(a -> requireType(Boolean.class, eval(a))).collect(Collectors.toList());
-            for(int i = 0; i < argList.size(); i++)
-                if (eval(args.get(i)).equals(true)) return true;
+            for(Boolean arg : argList)
+                if (arg) return true;
             return false;
         });
 
@@ -286,10 +264,8 @@ public final class Interpreter {
 
 
         //LIST
-        scope.define("list",  (Function<List<Ast>, Object>) args -> {
-            List<BigDecimal> myList = args.stream().map(a -> requireType(BigDecimal.class, eval(a))).collect(Collectors.toList());
-            return new LinkedList(myList);
-        });
+        scope.define("list",  (Function<List<Ast>, Object>) args ->
+                new LinkedList(args.stream().map(a ->eval(a)).collect(Collectors.toList())));
 
         //RANGE
         scope.define("range",  (Function<List<Ast>, Object>) args -> {
@@ -307,7 +283,6 @@ public final class Interpreter {
             return stream.boxed().collect(Collectors.toCollection(LinkedList::new));
         });
 
-        //TODO: define, set!
         //DEFINE
         scope.define("define",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2) throw new EvalException("define requires 2 arguments");
@@ -321,7 +296,7 @@ public final class Interpreter {
                     if (funcArgs.size() != callingArgs.size())
                         throw new EvalException("argument count does not match definition");
                     for (int i = 0; i < funcArgs.size(); i++)
-                        scope.set(requireType(Ast.Identifier.class, funcArgs.get(i)).getName(), eval(callingArgs.get(i)));
+                        scope.define(requireType(Ast.Identifier.class, funcArgs.get(i)).getName(), eval(callingArgs.get(i)));
                     eval(args.get(1));
                     scope = scope.getParent();
                     return VOID;
