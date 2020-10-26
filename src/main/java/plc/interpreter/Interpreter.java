@@ -308,6 +308,16 @@ public final class Interpreter {
         });
 
         //TODO: define, set!
+        //DEFINE
+        scope.define("define",  (Function<List<Ast>, Object>) args -> {
+            if (args.isEmpty()) return VOID;
+            Scope subScope = new Scope(scope);
+            scope = subScope;
+            Object lastArg = null;
+            for (Ast arg : args) lastArg = eval(arg);
+            scope = scope.getParent();
+            return lastArg;
+        });
 
         //State Functions
 
@@ -337,13 +347,14 @@ public final class Interpreter {
 
         //FOR
         scope.define("for",  (Function<List<Ast>, Object>) args -> {
-            if (args.size() != 3)
-                throw new EvalException("for requires 3 arguments, " + args.size() + " provided");
-            Scope subScope = new Scope(scope);
-            scope = subScope;
-            scope.define(requireType(Ast.Identifier.class, args.get(0)).getName(), requireType(LinkedList.class, args.get(1)).get(0));
-            for (Object num : requireType(LinkedList.class, args.get(1))) {
-                scope.set(requireType(Ast.Identifier.class, args.get(0)).getName(), num);
+            if (args.size() != 2 || args.get(0).getClass() != Ast.Term.class)
+                throw new EvalException("incorrect arguments for for function");
+            scope = new Scope(scope);
+            Ast.Term term = requireType(Ast.Term.class, args.get(0));
+            LinkedList forList = requireType(LinkedList.class, term.getArgs().get(0));
+            scope.define(term.getName(), forList.get(0));
+            for (Object num : forList) {
+                scope.set(term.getName(), num);
                 eval(args.get(2));
             }
             scope = scope.getParent();
