@@ -147,6 +147,14 @@ final class LexerTests {
 
     @Test
     void testExample6() {
+        String input = "1.2.3";
+        Assertions.assertThrows(ParseException.class, () -> Lexer.lex(input));
+        String input2 = "1. ";
+        Assertions.assertThrows(ParseException.class, () -> Lexer.lex(input2));
+    }
+
+    @Test
+    void testExample7() {
         String input = "\f";
         List<Token> expected = Arrays.asList(
                 new Token(Token.Type.OPERATOR, "\f", 0)
@@ -155,6 +163,20 @@ final class LexerTests {
         System.out.println(expected);
         System.out.println(output);
         Assertions.assertEquals(expected, output);
+    }
+
+    @Test
+    void testExample8() {
+        String input = "cat";
+        String[] patterns = new String[] {"c", "[aeiou]", "t"};
+        boolean matches = true;
+        Lexer lexer = new Lexer(input);
+        boolean peekResult = lexer.peek(patterns);
+        Assertions.assertEquals(matches, peekResult);
+        Assertions.assertEquals(0, lexer.chars.index);
+        boolean matchResult = lexer.match(patterns);
+        Assertions.assertEquals(matches, matchResult);
+        Assertions.assertEquals(matches ? patterns.length : 0, lexer.chars.index);
     }
 
 

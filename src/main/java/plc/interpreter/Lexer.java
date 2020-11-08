@@ -128,12 +128,14 @@ public final class Lexer {
     }
 
     boolean match(String... patterns) {
+        int startingIndex = chars.index;
         for (String pattern : patterns) {
             if (!peek(pattern)) {
+                chars.index = startingIndex;
                 return false;
             }
+            chars.advance();
         }
-        chars.advance(patterns.length);
         return true;
     }
 

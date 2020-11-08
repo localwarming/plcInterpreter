@@ -6,5 +6,5 @@
 Ý[OPERATOR=`(`@0, IDENTIFIER=`let`@1, OPERATOR=`[`@5, IDENTIFIER=`x`@6, NUMBER=`10`@8, OPERATOR=`]`@10, OPERATOR=`(`@12, IDENTIFIER=`assert-equals?`@13, IDENTIFIER=`x`@28, NUMBER=`10`@30, OPERATOR=`)`@32, OPERATOR=`)`@33]
 [IDENTIFIER=`..`@0]
 [IDENTIFIER=`..`@0]
-[OPERATOR=``@0]
-[OPERATOR=``@0]
+[OPERATOR=``@0]
+[OPERATOR=``@0]
