@@ -43,7 +43,7 @@ public final class Lexer {
     List<Token> lex() throws ParseException {
         List<Token> tokens = new ArrayList<Token>();
         while (chars.has(0)) {
-            if (!peek("\\S")) {
+            if (!peek("[^ \\n\\r\\t]")) {
                 chars.advance();
                 chars.reset();
             } else {

@@ -145,6 +145,18 @@ final class LexerTests {
         Assertions.assertEquals(expected, output);
     }
 
+    @Test
+    void testExample6() {
+        String input = "\f";
+        List<Token> expected = Arrays.asList(
+                new Token(Token.Type.OPERATOR, "\f", 0)
+        );
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
+    }
+
 
     @ParameterizedTest
     @MethodSource("plc.interpreter.LexerTests#testPeekAndMatch")
