@@ -89,7 +89,10 @@ final class LexerTests {
                 new Token(Token.Type.NUMBER, "-2.0", 5),
                 new Token(Token.Type.OPERATOR, ")", 9)
         );
-        Assertions.assertEquals(expected, Lexer.lex(input));
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
     }
 
     @Test
@@ -101,7 +104,10 @@ final class LexerTests {
                 new Token(Token.Type.STRING, "\"Hello, World!\"", 7),
                 new Token(Token.Type.OPERATOR, ")", 22)
         );
-        Assertions.assertEquals(expected, Lexer.lex(input));
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
     }
 
     @Test
@@ -121,8 +127,24 @@ final class LexerTests {
                 new Token(Token.Type.OPERATOR, ")", 32),
                 new Token(Token.Type.OPERATOR, ")", 33)
         );
-        Assertions.assertEquals(expected, Lexer.lex(input));
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
     }
+
+    @Test
+    void testExample5() {
+        String input = "..";
+        List<Token> expected = Arrays.asList(
+                new Token(Token.Type.IDENTIFIER, "..", 0)
+        );
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
+    }
+
 
     @ParameterizedTest
     @MethodSource("plc.interpreter.LexerTests#testPeekAndMatch")

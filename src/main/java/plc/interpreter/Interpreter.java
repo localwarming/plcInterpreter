@@ -1,6 +1,5 @@
 package plc.interpreter;
 
-import javax.jws.Oneway;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

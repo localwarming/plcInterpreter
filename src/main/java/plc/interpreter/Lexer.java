@@ -58,7 +58,7 @@ public final class Lexer {
             return lexString();
         } else if (peek("[+-]","[0-9]") | peek("[0-9]")) {
             return lexNumber();
-        } else if (peek("[A-Za-z_+\\-*/:!?<>=]")){
+        } else if (peek("[A-Za-z_+\\-\\.*/:!?<>=]")){
             return lexIdentifier();
         } else {
             chars.advance();
@@ -67,15 +67,11 @@ public final class Lexer {
     }
 
     Token lexIdentifier() {
-        if (!match("[A-Za-z_+\\-*/:!?<>=]")) {
+        if (!match("[A-Za-z_+\\-\\.*/:!?<>=]")) {
             throw new ParseException("Identifier does not begin with identifier character.", chars.index);
         }
-        while (peek("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
-            if (match("\\.")) {
-                if (!peek("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
-                    throw new ParseException("Trailing period in identifier.", chars.index);
-                }
-            } else if (!match("[A-Za-z0-9_+\\-*/.:!?<>=]")) {
+        while (peek("[A-Za-z0-9_+\\-\\.*/:!?<>=]")) {
+            if (!match("[A-Za-z0-9_+\\-\\.*/:!?<>=]")) {
                 throw new ParseException("Identifier contains invalid character.", chars.index);
             }
         }
