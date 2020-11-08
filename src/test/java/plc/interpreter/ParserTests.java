@@ -167,6 +167,40 @@ final class ParserTests {
         test(input, Arrays.asList(expected));
     }
 
+    @Test
+    void testExample4() {
+        String input = "(10 x)";
+        Assertions.assertThrows(ParseException.class, () -> Parser.parse(input));
+    }
+
+    @Test
+    void testExample5() {
+        String input = "(";
+        Assertions.assertThrows(ParseException.class, () -> Parser.parse(input));
+    }
+
+    @Test
+    void testExample6() {
+        String input = "(print x]";
+        Assertions.assertThrows(ParseException.class, () -> Parser.parse(input));
+    }
+
+    @Test
+    void testExample7() {
+        String input = "[print (f x))";
+        Assertions.assertThrows(ParseException.class, () -> Parser.parse(input));
+    }
+
+    @Test
+    void testExample8() {
+        String input = "(print \\\"\\\\b\\\\n\\\\r\\\\t\\\\\\'\\\\\\\"\\\\\\\\\\\")";
+        Ast expected = new Ast.Term("print", Arrays.asList(
+                new Ast.StringLiteral("\"\b\n\r\t\'\"\\\"")
+        ));
+        Ast output = Parser.parse(input);
+        Assertions.assertEquals(expected, output);
+    }
+
     void test(String input, List<Ast> expected) {
         if (expected != null) {
             Ast ast = new Ast.Term("source", expected);

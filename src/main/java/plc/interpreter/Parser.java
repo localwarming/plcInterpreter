@@ -28,11 +28,31 @@ public final class Parser {
 
     //where most of the work is, and that is what is being recursively called
     private Ast parseAst() {
-        if (match("(") || match("[")) {
+        if (match("(")) {
+            if (!tokens.has(0)) throw new ParseException("Unclosed )", tokens.index);
             String name = tokens.get(0).getLiteral();
+            if (tokens.get(0).getType() != Token.Type.IDENTIFIER) {
+                throw new ParseException("AST name not identifier", tokens.index);
+            }
             tokens.advance();
             List<Ast> args = new ArrayList<>();
-            while (!match(")") && !match("]")) {
+            while (!match(")")) {
+                if (!tokens.has(0)) {
+                    throw new ParseException("Unclosed )", tokens.index);
+                }
+                args.add(parseAst());
+            }
+            return new Ast.Term(name, args);
+        } else if (match("[")) {
+            if (!tokens.has(0)) throw new ParseException("Unclosed ]", tokens.index);
+            String name = tokens.get(0).getLiteral();
+            if (tokens.get(0).getType() != Token.Type.IDENTIFIER) {
+                throw new ParseException("AST name not identifier", tokens.index);
+            }
+            tokens.advance();
+            List<Ast> args = new ArrayList<>();
+            while (!match("]")) {
+                if (!tokens.has(0)) throw new ParseException("Unclosed ]", tokens.index);
                 args.add(parseAst());
             }
             return new Ast.Term(name, args);
