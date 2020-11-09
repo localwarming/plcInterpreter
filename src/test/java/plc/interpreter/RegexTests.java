@@ -51,7 +51,7 @@ public class RegexTests {
                 Arguments.of("Upper Case Everything", "THELENGEND27@GMAIL.com", true),
                 Arguments.of("UF Domain", "otherdomain@ufl.edu", true),
                 Arguments.of("Other Domain", "otherdomain@yahoo.com", true),
-                Arguments.of("TLD 2 Char", "thelegend@gmail.co", true),
+                Arguments.of("2 Char TLD", "thelegend@gmail.co", true),
                 Arguments.of("Domain Name Missing", "local@.tld", true),
                 Arguments.of("Domain Name Numbers", "local@123.tld", true),
                 Arguments.of("Domain Name Hyphen", "local@a-b-c.tld", true),
@@ -66,10 +66,10 @@ public class RegexTests {
                 Arguments.of("Extra Domain Dot", "extradot@gmail..com", false),
                 Arguments.of("Long com", "differentcom.@gmail.comm", false),
                 Arguments.of("Symbols", "symbols#$%@gmail.com", false),
-                Arguments.of("TLD 0 Char", "thelegend@gmail.", false),
-                Arguments.of("TLD 1 Char", "thelegend@gmail.c", false),
-                Arguments.of("TLD Uppercase", "thelegend@gmail.COM", false),
-                Arguments.of("TLD Invalid Char", "thelegend@gmail.%#$", false)
+                Arguments.of("0 Char TLD", "thelegend@gmail.", false),
+                Arguments.of("1 Char TLD", "thelegend@gmail.c", false),
+                Arguments.of("Uppercase TLD", "thelegend@gmail.COM", false),
+                Arguments.of("Invalid Char TLD", "thelegend@gmail.%#$", false)
         );
     }
 
@@ -85,11 +85,13 @@ public class RegexTests {
 
     public static Stream<Arguments> testFileNamesRegex() {
         return Stream.of(
-                Arguments.of("Java File", "Regex.tar.java", true),
+                Arguments.of("Java File", "Regex.java", true),
+                Arguments.of("Java File With Extensionn", "Regex.tar.java", true),
                 Arguments.of("Java Class", "RegexTests.class", true),
-                Arguments.of("Gz Class", "RegexTests.class.gz", true),
-                Arguments.of("Zip Class", "RegexTests.class.zip", true),
+                Arguments.of("Java Class with Extension", "RegexTests.tar.class", true),
                 Arguments.of("Sub-Name Class", "Regex.Tests.class", true),
+                Arguments.of("Gz Class", "RegexTests.class.gz", false),
+                Arguments.of("Zip Class", "RegexTests.class.zip", false),
                 Arguments.of("Directory", "directory", false),
                 Arguments.of("No type", "directory.", false),
                 Arguments.of("Start with .", ".file.class", false),

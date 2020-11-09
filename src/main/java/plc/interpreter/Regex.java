@@ -16,5 +16,4 @@ public class Regex {
             IDENTIFIER = Pattern.compile("[A-Za-z_+\\-*/:!?<>=][A-Za-z0-9_+\\-*/.:!?<>=]*|\\.[A-Za-z0-9_+\\-*/.:!?<>=]+"),
             NUMBER = Pattern.compile("[+-]?[0-9]+(\\.[0-9]+)?"),
             STRING = Pattern.compile("\"([^\"\\\\]|\\\\[bnrt\'\"\\\\])*\"");
-
 }
