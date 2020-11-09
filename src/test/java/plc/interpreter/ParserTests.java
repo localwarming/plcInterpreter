@@ -122,8 +122,29 @@ final class ParserTests {
                 Arguments.of("Alphanumeric", "(print \"abc123\")", Arrays.asList(
                         new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("abc123")))
                 )),
-                Arguments.of("Escape", "(print \"new\\nline\")", Arrays.asList(
+                Arguments.of("Newline", "(print \"new\\nline\")", Arrays.asList(
                         new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\nline")))
+                )),
+                Arguments.of("b", "(print \"new\\bline\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\bline")))
+                )),
+                Arguments.of("r", "(print \"new\\rline\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\rline")))
+                )),
+                Arguments.of("t", "(print \"new\\tline\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\tline")))
+                )),
+                Arguments.of("\'", "(print \"new\\'line\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\'line")))
+                )),
+                Arguments.of("\\", "(print \"new\\\\line\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\\line")))
+                )),
+                Arguments.of("\"", "(print \"new\\\"line\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("new\"line")))
+                )),
+                Arguments.of("all", "(print \"\\b\\n\\r\\t\\\'\\\"\\\\\")", Arrays.asList(
+                        new Ast.Term("print", Arrays.asList(new Ast.StringLiteral("\b\n\r\t\'\"\\")))
                 ))
         );
     }
@@ -189,16 +210,6 @@ final class ParserTests {
     void testExample7() {
         String input = "[print (f x))";
         Assertions.assertThrows(ParseException.class, () -> Parser.parse(input));
-    }
-
-    @Test
-    void testExample8() {
-        String input = "(print \\\"\\\\b\\\\n\\\\r\\\\t\\\\\\'\\\\\\\"\\\\\\\\\\\")";
-        Ast expected = new Ast.Term("print", Arrays.asList(
-                new Ast.StringLiteral("\"\b\n\r\t\'\"\\\"")
-        ));
-        Ast output = Parser.parse(input);
-        Assertions.assertEquals(expected, output);
     }
 
     void test(String input, List<Ast> expected) {

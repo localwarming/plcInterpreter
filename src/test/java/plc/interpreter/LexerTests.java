@@ -59,6 +59,7 @@ final class LexerTests {
                 Arguments.of("\"\"", true),
                 Arguments.of("\"abc\"", true),
                 Arguments.of("\"Hello,\\nWorld\"", true),
+                Arguments.of("\"Hello,\\\\World\"", true),
                 Arguments.of("\"unterminated", false),
                 Arguments.of("\"invalid\\escape\"", false)
         );
@@ -177,6 +178,18 @@ final class LexerTests {
         boolean matchResult = lexer.match(patterns);
         Assertions.assertEquals(matches, matchResult);
         Assertions.assertEquals(matches ? patterns.length : 0, lexer.chars.index);
+    }
+
+    @Test
+    void testExample9() {
+        String input = "\\\"\\\\b\\\\n\\\\r\\\\t\\\\\\'\\\\\\\"\\\\\\\\\\\"";
+        List<Token> expected = Arrays.asList(
+                new Token(Token.Type.STRING, "\b\n\r\t\'\"\\", 0)
+        );
+        List<Token> output = Lexer.lex(input);
+        System.out.println(expected);
+        System.out.println(output);
+        Assertions.assertEquals(expected, output);
     }
 
 

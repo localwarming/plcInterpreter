@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="plc.interpreter.ParserTests" tests="32" skipped="0" failures="0" errors="0" timestamp="2020-11-09T02:17:44" hostname="DOLPHIN.local" time="0.155">
+  <properties/>
+  <testcase name="testExample1()" classname="plc.interpreter.ParserTests" time="0.022"/>
+  <testcase name="testExample2()" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testExample3()" classname="plc.interpreter.ParserTests" time="0.004"/>
+  <testcase name="testExample4()" classname="plc.interpreter.ParserTests" time="0.003"/>
+  <testcase name="testExample5()" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testExample6()" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testExample7()" classname="plc.interpreter.ParserTests" time="0.004"/>
+  <testcase name="testTerm(String, String, List)[1]" classname="plc.interpreter.ParserTests" time="0.016"/>
+  <testcase name="testTerm(String, String, List)[2]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testTerm(String, String, List)[3]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testTerm(String, String, List)[4]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testTerm(String, String, List)[5]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testInvalidCharacter()" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testNumber(String, String, List)[1]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testNumber(String, String, List)[2]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testNumber(String, String, List)[3]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testSource(String, String, List)[1]" classname="plc.interpreter.ParserTests" time="0.0"/>
+  <testcase name="testSource(String, String, List)[2]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testSource(String, String, List)[3]" classname="plc.interpreter.ParserTests" time="0.003"/>
+  <testcase name="testSource(String, String, List)[4]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[1]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[2]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[3]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[4]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[5]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[6]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[7]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testString(String, String, List)[8]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testString(String, String, List)[9]" classname="plc.interpreter.ParserTests" time="0.002"/>
+  <testcase name="testString(String, String, List)[10]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testIdentifier(String, String, List)[1]" classname="plc.interpreter.ParserTests" time="0.001"/>
+  <testcase name="testIdentifier(String, String, List)[2]" classname="plc.interpreter.ParserTests" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -65,7 +65,7 @@ public final class Parser {
             tempLiteral = tempLiteral.replaceAll("\\\\t", "\t");
             tempLiteral = tempLiteral.replaceAll("\\\\'", "\'");
             tempLiteral = tempLiteral.replaceAll("\\\\\"", "\"");
-            tempLiteral = tempLiteral.replaceAll("\\\\\\\\", "\\");
+            tempLiteral = tempLiteral.replaceAll("\\\\\\\\", "\\\\");
             tokens.advance();
             return new Ast.StringLiteral(tempLiteral);
         } else if (peek(Token.Type.NUMBER)) {
