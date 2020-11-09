@@ -51,6 +51,13 @@ public class RegexTests {
                 Arguments.of("Upper Case Everything", "THELENGEND27@GMAIL.com", true),
                 Arguments.of("UF Domain", "otherdomain@ufl.edu", true),
                 Arguments.of("Other Domain", "otherdomain@yahoo.com", true),
+                //ask
+                Arguments.of("TLD 2 Char", "thelegend@gmail.co", true),
+                Arguments.of("Domain Name Missing", "local@.tld", true),
+                Arguments.of("Domain Name Numbers", "local@123.tld", true),
+                Arguments.of("Domain Name Hyphen", "local@a-b-c.tld", true),
+                Arguments.of("Domain Name No Underscore", "local@a_b_c.tld", false),
+                Arguments.of("Domain Subdomains", "local@domain.sub.tld", false),
                 Arguments.of("Missing Domain Dot", "missingdot@gmailcom", false),
                 Arguments.of("Extra @ Symbol", "extraat@@gmail.com", false),
                 Arguments.of("Just the Domain", "@gmail.com", false),
@@ -59,7 +66,11 @@ public class RegexTests {
                 Arguments.of("Just the @ Symbol", "@", false),
                 Arguments.of("Extra Domain Dot", "extradot@gmail..com", false),
                 Arguments.of("Long com", "differentcom.@gmail.comm", false),
-                Arguments.of("Symbols", "symbols#$%@gmail.com", false)
+                Arguments.of("Symbols", "symbols#$%@gmail.com", false),
+                Arguments.of("TLD 0 Char", "thelegend@gmail.", false),
+                Arguments.of("TLD 1 Char", "thelegend@gmail.c", false),
+                Arguments.of("TLD Uppercase", "thelegend@gmail.COM", false),
+                Arguments.of("TLD Invalid Char", "thelegend@gmail.%#$", false)
         );
     }
 
