@@ -51,7 +51,6 @@ public class RegexTests {
                 Arguments.of("Upper Case Everything", "THELENGEND27@GMAIL.com", true),
                 Arguments.of("UF Domain", "otherdomain@ufl.edu", true),
                 Arguments.of("Other Domain", "otherdomain@yahoo.com", true),
-                //ask
                 Arguments.of("TLD 2 Char", "thelegend@gmail.co", true),
                 Arguments.of("Domain Name Missing", "local@.tld", true),
                 Arguments.of("Domain Name Numbers", "local@123.tld", true),
@@ -97,7 +96,10 @@ public class RegexTests {
                 Arguments.of("Dot in class", "file.cl.ass", false),
                 Arguments.of("Whitespace", "file. class", false),
                 Arguments.of("Just .", ".", false),
-                Arguments.of("Python File", "scrippy.py", false)
+                Arguments.of("Python File", "scrippy.py", false),
+                Arguments.of("Whitespace after", "RegexTests. class", false),
+                Arguments.of("Just Whitespace", " ", false),
+                Arguments.of("Symbol File", "RegexTests.$%#", false)
         );
     }
 
