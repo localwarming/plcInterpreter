@@ -285,6 +285,33 @@ public final class Interpreter {
         //DEFINE
         scope.define("define",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2) throw new EvalException("define requires 2 arguments");
+
+            //Variable
+            if (args.get(0) instanceof Ast.Identifier) {
+                scope.define(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(1)));
+            }
+            else if (args.get(0) instanceof Ast.Term) {
+                Ast.Term term = requireType(Ast.Term.class, eval(args.get(0)));
+                List funcArgs = term.getArgs();
+                scope.define(term.getName(),  (Function<List<Ast>, Object>) callingArgs -> {
+                    scope = new Scope(scope);
+                    if (funcArgs.size() != callingArgs.size())
+                        throw new EvalException("argument count does not match definition");
+                    for (int i = 0; i < funcArgs.size(); i++)
+                        scope.define(requireType(Ast.Identifier.class, funcArgs.get(i)).getName(), eval(callingArgs.get(i)));
+                    eval(args.get(1));
+                    scope = scope.getParent();
+                    return VOID;
+                });
+            } else {
+                throw new EvalException("define has incorrect argument type");
+            }
+            return VOID;
+        });
+
+        /*
+                scope.define("define",  (Function<List<Ast>, Object>) args -> {
+            if (args.size() != 2) throw new EvalException("define requires 2 arguments");
             if (eval(args.get(0)).getClass() == Ast.Identifier.class) {
                 scope.define(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(0)));
             } else if (eval(args.get(0)).getClass() == Ast.Term.class) {
@@ -305,6 +332,7 @@ public final class Interpreter {
             }
             return VOID;
         });
+         */
 
 
         //SET
