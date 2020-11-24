@@ -336,9 +336,9 @@ public final class Interpreter {
 
 
         //SET
-        scope.define("set",  (Function<List<Ast>, Object>) args -> {
+        scope.define("set!",  (Function<List<Ast>, Object>) args -> {
             if (args.size() != 2) throw new EvalException("set requires 2 arguments");
-            scope.set(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(0)));
+            scope.set(requireType(Ast.Identifier.class, args.get(0)).getName(), eval(args.get(1)));
             return VOID;
         });
 
